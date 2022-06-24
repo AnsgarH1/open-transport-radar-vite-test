@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { Box, Flex, Heading, List, ListItem } from '@chakra-ui/react'
 import DepartureStation from './DepartureStation'
 import useStations from './useStations'
 
@@ -7,12 +7,20 @@ function DepartureBoard() {
     const { nearbyStations } = useStations()
 
     return (
-        <div>DepartureBoard
-           
+        <Box>
+            <Box bgColor="gray.300" p="0" m="0">
                 {nearbyStations.map(station => <DepartureStation station={station} />)}
-          
-        </div>
+            </Box>
+
+        </Box>
     )
 }
 
 export default DepartureBoard
+
+
+
+/**
+ * 
+ * 50.071118, 8.243114
+ */

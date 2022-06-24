@@ -2,17 +2,18 @@ declare namespace Hafas_Departures {
   export interface Departure {
     tripID: string;
     stop: Destination;
-    when: Date;
+    when: Date | null;
     plannedWhen: Date;
     delay: number;
-    platform: null;
-    plannedPlatform: null;
+    platform: string | null;
+    plannedPlatform: string | null;
     direction: string;
     provenance: null;
     line: Line;
     remarks: Remark[];
-    origin: null;
+    origin: Destination;
     destination: Destination;
+    cancelled?:boolean
   }
 
   export interface Destination {

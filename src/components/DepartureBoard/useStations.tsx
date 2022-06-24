@@ -1,7 +1,34 @@
-import { useEffect, useState } from 'react'
+import { createStandaloneToast, ToastId, useToast, UseToastOptions } from '@chakra-ui/react'
+import { useEffect, useRef, useState } from 'react'
 import { getStations } from '../../api/stations'
 
 const useStations = () => {
+
+    const toast = useToast()
+    const locationToastId = useRef<ToastId>()
+    const stationsToastId = useRef<ToastId>()
+
+    const showLocationToast = () => {
+        locationToastId.current = toast({ status: "info", description: "Lade Standort..", duration: null, isClosable: true })
+    }
+
+    const updateLocationToast = (options: UseToastOptions) => {
+        if (locationToastId.current) {
+            toast.update(locationToastId.current, options)
+        }
+    }
+
+    const showStationsToast = () => {
+        stationsToastId.current = toast({ status: "info", description: "Lade Haltestellen..", duration: null, isClosable: true })
+    }
+    const updateStationToast = (options: UseToastOptions) => {
+        if (stationsToastId.current) {
+            toast.update(stationsToastId.current, options)
+        }
+    }
+
+
+
     const [isLoadingGeoLocation, setLoadingGeoLocation] = useState(false)
     const [isLoadingStations, setLoadingStations] = useState(false)
     const [currentCoords, setCoords] = useState<GeolocationCoordinates>()
@@ -11,14 +38,21 @@ const useStations = () => {
     useEffect(() => {
         if ("geolocation" in navigator) {
             setLoadingGeoLocation(true)
+            showLocationToast()
             navigator.geolocation.getCurrentPosition(position => {
+                updateLocationToast({ status: "success", description: "Standort gefunden!", duration: 2000 })
                 console.log("found position,", position.coords)
                 setCoords(position.coords)
                 /** Get Nearby Stations with found coordinates */
+                showStationsToast()
                 getStations({ lat: position.coords.latitude, long: position.coords.longitude })
                     .then(stations => {
+                        updateStationToast({status:"success", description: "Haltestellen gefunden!", duration: 2000})
                         if (stations) setNearbyStations(stations)
                     })
+            }, (error) => {
+                updateLocationToast({ status: "error", title: "Standort-Feler", description: error.message, duration: 5000 })
+
             })
         }
     }, [])

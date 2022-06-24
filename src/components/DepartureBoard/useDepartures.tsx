@@ -6,13 +6,14 @@ const useDepartures = (stationId: string) => {
   const [departures, setDepartures] = useState<Hafas_Departures.Departure[]>(
     []
   );
-
+  
   useEffect(() => {
     setLoading(true);
     getDepartures(stationId)
       .then((departures) => {
         if (departures) {
           setDepartures(departures);
+
         }
       })
       .finally(() => {
