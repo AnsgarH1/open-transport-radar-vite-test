@@ -49,7 +49,7 @@ function DepartureItem({ departure, index }: { departure: Hafas_Departures.Depar
                 <AccordionPanel>
                     <Text>Betreiber: {line.operator.name}</Text>
                     <Text>Fahrt-Nr. {line.fahrtNr}</Text>
-                    {remarks && remarks.map((remark, remarkIndex) => <Box py="2" borderTop={remarkIndex === 0 ? "none" : "lightgray solid"} fontSize="xs">{remark.text}</Box>)}
+                    {remarks && remarks.map((remark, remarkIndex) => <Box py="2" borderTop={remarkIndex === 0 ? "none" : "lightgray solid"} fontSize="sm" dangerouslySetInnerHTML={{ __html: remark.text }}></Box>)}
                 </AccordionPanel>
             </Flex>
             <Flex justify="center">
