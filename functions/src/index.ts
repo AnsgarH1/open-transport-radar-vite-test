@@ -1,9 +1,13 @@
 import * as functions from "firebase-functions";
 import express = require("express");
+import * as cors from "cors";
 import {body, query, validationResult} from "express-validator";
 import createClient = require("hafas-client");
 import rmvProfile = require("hafas-client/p/rmv");
+
 const app = express();
+
+app.use(cors({origin: true}));
 
 const stationsRequestValidation = [
     body("latitude").isFloat(),
@@ -115,4 +119,4 @@ app.get(
     },
 );
 
-export default functions.https.onRequest(app);
+export default functions.region("europe-west1").https.onRequest(app);
