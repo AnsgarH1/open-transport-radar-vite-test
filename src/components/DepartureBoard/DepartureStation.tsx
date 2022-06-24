@@ -1,32 +1,39 @@
-import { Box, Flex, Heading, Icon, Spinner, Text } from "@chakra-ui/react";
+import { RepeatIcon } from "@chakra-ui/icons";
+import { Accordion, Box, Flex, Heading, Icon, IconButton, Spinner, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { FaBus, FaLocationArrow } from "react-icons/fa";
 import ProductIcon from "../ProductIcon/ProductIcon";
 import DepartureItem from "./DepartureItem";
 import useDepartures from "./useDepartures";
 
-function DepartureStation({ station }: { station: Hafas_Stations.Station }) {
-  const { name, distance, products, id } = station;
+function DepartureStation({ station, index }: { station: Hafas_Stations.Station, index: number }) {
+  const { name, distance, products, id, type } = station;
 
-  const { departures, isLoading } = useDepartures(id);
+  const { departures, isLoading, loadDepartures } = useDepartures(id);
 
   return (
-    <Box rounded="md" bgColor="white" my="1" flex="1" borderBottom="gray 1px" >
-      <Flex align="center" justify="space-between">
-        <Flex align="center">
-          <ProductIcon product={products} />
-          <Heading size="sm">{name}</Heading>
-        </Flex>
-        <Flex align="center">
-          <Icon mr="2" size="xs" as={FaLocationArrow} />
-          <Text>{distance}m </Text>
-        </Flex>
+    <Box key={station.id + index} rounded="md" bgColor="white" my="1" flex="1" alignItems={"center"}>
+      <Flex align="center" justify="space-between" bgColor="gray.400" p="2">
+        <Box>
+          <Flex align="center">
+            <ProductIcon product={products} />
+            <Heading size="md">{name}</Heading>
+          </Flex>
+          <Flex align="center">
+            <Icon mr="2" size="xs" as={FaLocationArrow} />
+            <Text>{distance}m </Text>
+          </Flex>
+        </Box>
+        <IconButton aria-label="refresh" icon={<RepeatIcon />} onClick={loadDepartures} />
       </Flex>
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        departures.map((departure) => <DepartureItem departure={departure}/>)
-      )}
+      <Accordion px="2">
+
+        {isLoading ? (
+          <Spinner alignSelf={"center"} />
+        ) : (
+          departures.map((departure, i) => <DepartureItem key={departure.tripID} departure={departure} index={i} />)
+        )}
+      </Accordion>
     </Box>
   );
 }

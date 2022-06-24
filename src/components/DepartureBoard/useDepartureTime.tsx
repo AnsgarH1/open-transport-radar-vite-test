@@ -4,6 +4,17 @@ const useDepartureTime = (when: Date | null, plannedWhen: Date) => {
 
     const usedDepartureTime = when ? new Date(when) : new Date(plannedWhen)
 
+    function getDelay(planned: Date, actual: Date | null) {
+        if (actual === null || actual == planned) {
+            return undefined
+        }
+        const plannedDate = DateTime.fromJSDate(new Date(planned))
+        const actualDate = DateTime.fromJSDate(new Date(actual))
+        const diff = actualDate.diff(plannedDate)
+        return diff.toFormat("m")
+    }
+
+
     function getDisplayTime(time: Date): string {
         const dt = DateTime.fromJSDate(time)
         const delta = (dt).diffNow("minutes").minutes
@@ -22,9 +33,10 @@ const useDepartureTime = (when: Date | null, plannedWhen: Date) => {
 
     return {
         displayDepartureTime: getDisplayTime(usedDepartureTime),
-        delayed: when ? when !== plannedWhen: null,
-        hasDelayInfo: !!when
+        delayed: when ? when !== plannedWhen : undefined,
+
+        delay: getDelay(plannedWhen, when)
     }
 }
 
-export {useDepartureTime}
+export { useDepartureTime }

@@ -34,6 +34,17 @@ const useStations = () => {
     const [currentCoords, setCoords] = useState<GeolocationCoordinates>()
     const [nearbyStations, setNearbyStations] = useState<Hafas_Stations.Station[]>([])
 
+
+    function loadStations(lat: number, long: number) {
+        showStationsToast()
+        setLoadingStations(true)
+        getStations({ lat, long })
+            .then(stations => {
+                updateStationToast({ status: "success", description: "Haltestellen gefunden!", duration: 2000 })
+                if (stations) setNearbyStations(stations)
+            }).finally(() => setLoadingStations(false))
+    }
+
     /** Fetching Browser Location **/
     useEffect(() => {
         if ("geolocation" in navigator) {
@@ -44,12 +55,7 @@ const useStations = () => {
                 console.log("found position,", position.coords)
                 setCoords(position.coords)
                 /** Get Nearby Stations with found coordinates */
-                showStationsToast()
-                getStations({ lat: position.coords.latitude, long: position.coords.longitude })
-                    .then(stations => {
-                        updateStationToast({status:"success", description: "Haltestellen gefunden!", duration: 2000})
-                        if (stations) setNearbyStations(stations)
-                    })
+                loadStations(position.coords.latitude, position.coords.longitude)
             }, (error) => {
                 updateLocationToast({ status: "error", title: "Standort-Feler", description: error.message, duration: 5000 })
 
@@ -59,6 +65,9 @@ const useStations = () => {
 
     return {
         nearbyStations: nearbyStations || undefined,
+        loadStations,
+        currentCoords,
+        isLoadingStations
 
     }
 }
