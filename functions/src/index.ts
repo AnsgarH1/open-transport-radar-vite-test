@@ -59,7 +59,9 @@ app.get(
             }
             const client = createClient(rmvProfile, "transport-radar");
 
-            const results = await client.departures(stationID, undefined);
+            const results = await client.departures(stationID, {
+                includeRelatedStations: false,
+            });
             functions.logger.info("Hafas Results:", results);
             return res.json(results);
         } catch (e) {
