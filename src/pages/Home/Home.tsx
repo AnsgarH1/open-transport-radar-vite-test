@@ -2,6 +2,7 @@ import { Heading, Text, Container, Grid, GridItem } from '@chakra-ui/react'
 import React from 'react'
 import { Layout } from '../../components'
 import DepartureBoard from '../../components/DepartureBoard/DepartureBoard'
+import Map from './Map'
 
 function Home() {
     return (
@@ -20,7 +21,7 @@ function Home() {
                     Suchleiste
                 </GridItem>
                 <GridItem bg="blue.100" colSpan={{ "base": 1, "md": 1 }}><DepartureBoard /></GridItem>
-                <GridItem bg="green.100" colSpan={{ "base": 1, "md": 2 }} >Radar</GridItem>
+                <GridItem bg="green.100" colSpan={{ "base": 1, "md": 2 }} ><Map /></GridItem>
             </Grid>
         </Layout>
     )
