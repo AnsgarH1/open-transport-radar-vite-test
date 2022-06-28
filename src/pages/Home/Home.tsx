@@ -3,7 +3,7 @@ import React from 'react'
 import { Layout } from '../../components'
 import DepartureBoard from '../../components/DepartureBoard/DepartureBoard'
 import { LocationContextProvider } from '../../context/LocationContext'
-import Map from './Map'
+import Map from '../../components/Map/Map'
 
 function Home() {
     return (
@@ -21,8 +21,8 @@ function Home() {
                 <GridItem bg="gray.100" colSpan={{ "base": 1, "md": 3 }} w="1fr" >
                     Suchleiste
                 </GridItem>
+                <GridItem bg="blue.100" colSpan={{ "base": 1, "md": 1 }}><DepartureBoard /></GridItem>
                 <LocationContextProvider>
-                    <GridItem bg="blue.100" colSpan={{ "base": 1, "md": 1 }}><DepartureBoard /></GridItem>
                     <GridItem bg="green.100" colSpan={{ "base": 1, "md": 2 }} ><Map /></GridItem>
                 </LocationContextProvider>
             </Grid>
