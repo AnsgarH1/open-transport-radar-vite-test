@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState, useContext } from 'react';
 import mapboxgl from 'mapbox-gl';
 import "mapbox-gl/dist/mapbox-gl.css";
-import useCoords from '../../components/DepartureBoard/useCoords';
 import { Spinner } from '@chakra-ui/react';
 import { LocationContext } from '../../context/LocationContext';
 
