@@ -59,9 +59,9 @@ app.get(
             }
             const client = createClient(rmvProfile, "transport-radar");
 
-            const results = await client.departures(stationID, undefined);
+            const results = await client.departures(stationID, undefined) as any as Hafas_Departures.Departure[];
             functions.logger.info("Hafas Results:", results);
-            return res.json(results);
+            return res.json(results.filter(dep=>dep.stop.id==stationID));
         } catch (e) {
             functions.logger.error(e);
             return res.status(500).json(e);
@@ -79,7 +79,8 @@ const radarRequestValidation = [
     body("results").isInt().optional(),
 ];
 
-app.get(
+
+app.post(
     "/radar",
     radarRequestValidation,
     async (req: express.Request, res: express.Response) => {
