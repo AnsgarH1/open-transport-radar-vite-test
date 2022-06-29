@@ -17,25 +17,16 @@ function Map() {
         isLoadingLocation } = useContext(LocationContext)
 
     useEffect(() => {
-        console.log("Map.tsx: useEffect")
-
-        if (!currentLocation) {
-            console.log(`EY ICH HAB noch keinen Standort aber loading: ${isLoadingLocation}`)
-        } else {
-            console.log(`Ich habe einen Standort aber loading: ${isLoadingLocation}`)
-        }
-        if (!currentLocation?.coords) { console.log("No coordinates found "); return }
+       
+        if (!currentLocation?.coords) { console.log("Map.useEffect: No coordinates found"); return }
         const lat = currentLocation.coords.latitude;
         const lng = currentLocation.coords.longitude;
-        console.log("Neue Koordinatn gesendet")
 
         if (map) {
             map.flyTo({ center: [lng, lat] })
-            console.log(`Ich fliege!! (zu lat: ${lat} & lng: ${lng}`)
         }
         else {
             initMap()
-            console.log(`Ich fliege NICHT (zu lat: ${lat} & lng: ${lng} + map:${map}`)
         }
     }, [currentLocation, isLoadingLocation]);
 

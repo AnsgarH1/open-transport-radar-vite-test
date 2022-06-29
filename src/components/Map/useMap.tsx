@@ -15,7 +15,6 @@ const useMap = (
 ) => {
     const [map, setMap] = useState<mapboxgl.Map>();
     const [isLoadingMap, setLoadingMap] = useState(false)
-    //const {currentLocation, isLoadingLocation} = useContext(LocationContext)
     const [lng, setLng] = useState(13)
     const [lat, setLat] = useState(52)
     const [zoom, setZoom] = useState(18);
@@ -41,7 +40,6 @@ const useMap = (
         //     setLat(mapboxMap.getCenter().lat)
         //     setZoom(mapboxMap.getZoom())
         // })
-        console.log(`Map neu gerendert (mit lat: ${lat} & lng: ${lng}`)
 
         const nav = new mapboxgl.NavigationControl()
         const ctrl = new mapboxgl.GeolocateControl({
@@ -55,8 +53,6 @@ const useMap = (
         mapboxMap.addControl(nav)
 
         setMap(mapboxMap)
-        console.log("Map gesetzt")
-
         setLoadingMap(false)
 
         return () => { 
