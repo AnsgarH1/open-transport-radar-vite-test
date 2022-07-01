@@ -10,17 +10,19 @@ const useTrip = (tripId: string, lineName: string) => {
 
 
     useEffect(() => {
-        loadTrip()
+       // loadTrip()
     })
 
     const loadTrip = () => {
         setIsLoadingTrip(true)
-        getTrip({ tripId, lineName }).then(trip => {
+        getTrip(tripId, lineName).then(trip => {
             setTrip(trip)
         }).catch(error => {
             toast({ status: "error", description: "Trip konnte nicht geladen werden!" })
             console.error(error)
             console.log(error)
+        }).finally(()=>{
+            setIsLoadingTrip(false)
         })
     }
 

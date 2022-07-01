@@ -1,4 +1,4 @@
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Flex, Heading, Icon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Spinner, Text, useBoolean, useDisclosure } from '@chakra-ui/react'
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Flex, Heading, Icon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Spinner, Text, useBoolean, useDisclosure } from '@chakra-ui/react'
 import { FcCancel } from "react-icons/fc"
 import { DateTime } from "luxon"
 import { useEffect } from 'react'
@@ -8,10 +8,10 @@ import useTrip from './departureHooks/useTrip'
 
 function DepartureItem({ departure, index }: { departure: Hafas_Departures.Departure, index: number }) {
 
-    const { line, platform, destination, cancelled, when, plannedWhen, remarks, direction, tripID } = departure
+    const { line, platform, destination, cancelled, when, plannedWhen, remarks, direction, tripId} = departure
     const { displayDepartureTime, delayed, delay } = useDepartureTime(when, plannedWhen)
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const { trip, isLoading } = useTrip(tripID, line.name)
+    const { trip, isLoading, loadTrip } = useTrip(tripId, line.name)
 
     if (cancelled) return (
         <Flex direction="column" borderTop={index === 0 ? "none" : "lightgrey solid 0.1px "} >
@@ -63,7 +63,9 @@ function DepartureItem({ departure, index }: { departure: Hafas_Departures.Depar
                         </ModalContent>
                     </Modal>
                     <Text>TODO: nächste Stops anzeigen</Text>
-                    {isLoading ? <Spinner/>: trip?.origin.name}
+                    {trip ? trip.origin.name :
+                        <Button w="full" onClick={loadTrip} isLoading={isLoading}>Lade gesamte Fahrt</Button>}
+
                 </AccordionPanel>
             </Flex>
             <Flex justify="center">
