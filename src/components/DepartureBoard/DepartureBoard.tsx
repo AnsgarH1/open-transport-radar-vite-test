@@ -1,6 +1,6 @@
 import { Box, Button, Flex, Heading, List, ListItem, Spinner, Text } from '@chakra-ui/react'
 import DepartureStation from './DepartureStation'
-import useStations from './useStations'
+import useStations from './departureHooks/useStations'
 
 function DepartureBoard() {
 

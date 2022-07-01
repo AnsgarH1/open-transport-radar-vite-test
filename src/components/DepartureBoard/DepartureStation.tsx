@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { FaBus, FaLocationArrow } from "react-icons/fa";
 import ProductIcon from "../ProductIcon/ProductIcon";
 import DepartureItem from "./DepartureItem";
-import useDepartures from "./useDepartures";
+import useDepartures from "./departureHooks/useDepartures";
 
 function DepartureStation({ station, index }: { station: Hafas_Stations.Station, index: number }) {
   const { name, distance, products, id, type } = station;

@@ -88,12 +88,17 @@ app.post(
             functions.logger.info(req.body);
             const {tripID, lineName} = req.body;
             if (typeof tripID != "string" || typeof lineName != "string") {
-                return res.status(400);
+                return res.status(400).json(JSON.stringify("tripID and lineName must be of type string!"));
             }
             const client = createClient(rmvProfile, "transport-radar");
 
-            //@ts-ignore
-            const results = await client.trip(tripID, lineName, {}) as any as HafasTrips.Trip;
+            let results = undefined;
+            if(client.trip){
+                 results = await client.trip(tripID, lineName, {}) as any as HafasTrips.Trip;
+            }else{
+                throw Error("Unexpected HAFAS Error! No Trips available on HafasClient!")
+            }
+          
             functions.logger.info("Hafas Results:", results);
             return res.json(results);
         } catch (e) {
