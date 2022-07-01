@@ -1,5 +1,5 @@
-import { useToast } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useBoolean, useToast } from "@chakra-ui/react";
+import { useEffect, useRef, useState } from "react";
 import { getDepartures } from "../../api/departures";
 
 const useDepartures = (stationId: string) => {
@@ -10,6 +10,18 @@ const useDepartures = (stationId: string) => {
   const [departures, setDepartures] = useState<Hafas_Departures.Departure[]>(
     []
   );
+  const [showAll, setShowAll] = useState(false)
+  const showAllButtonRef = useRef<HTMLButtonElement>(null)
+
+  const toggleShowAll = () => {
+    setShowAll(curr => !curr)
+  }
+  useEffect(() => {
+    showAllButtonRef.current?.scrollIntoView({ behavior: "smooth", block: "end" })
+
+  }, [showAll])
+
+
 
   function loadDepartures() {
     setLoading(true);
@@ -32,10 +44,14 @@ const useDepartures = (stationId: string) => {
   }, []);
 
   return {
-    departures: departures || undefined,
+    departures: (showAll ? departures : departures.slice(0, 5)) || undefined,
+    showAll,
+    toggleShowAll,
+    showAllButtonRef,
+    showMoreAvailable: departures.length > 5,
     isLoading,
-    loadDepartures
+    loadDepartures,
   };
-};
+}
 
 export default useDepartures;

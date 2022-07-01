@@ -12,20 +12,20 @@ function DepartureItem({ departure, index }: { departure: Hafas_Departures.Depar
 
 
     if (cancelled) return (
-        <Flex direction="column" borderTop={index === 0 ? "none" : "lightgrey solid"}>
-            <Flex justify="space-between">
+        <Flex direction="column" borderTop={index === 0 ? "none" : "lightgrey solid 0.1px "} >
+            <Box>
                 <Flex align="center">
                     <Icon as={FcCancel} mr="1" boxSize={"7"} />
                     <Heading size={"sm"} overflow="hidden" as="s" whiteSpace="nowrap">{line.name}</Heading>
                 </Flex>
-                <Text as="s" textOverflow={"ellipsis"} whiteSpace="nowrap">{destination.name}</Text>
-            </Flex>
+                <Text as="s" overflow="hidden"textOverflow={"ellipsis"} whiteSpace="nowrap">{destination.name}</Text>
+            </Box>
         </Flex>
     )
 
     return (
         <AccordionItem >
-            <Flex direction="column" borderTop={index === 0 ? "none" : "lightgrey solid"}>
+            <Flex direction="column" borderTop={index === 0 ? "none" : "lightgrey solid 0.1px"}>
                 <AccordionButton>
                     <Box w="100%">
 
@@ -49,7 +49,7 @@ function DepartureItem({ departure, index }: { departure: Hafas_Departures.Depar
                 <AccordionPanel>
                     <Text>Betreiber: {line.operator?.name || "keine Info vorhanden"}</Text>
                     <Text>Fahrt-Nr. {line.fahrtNr}</Text>
-                    {remarks && remarks.map((remark, remarkIndex) => <Box py="2" borderTop={remarkIndex === 0 ? "none" : "lightgray solid"} fontSize="sm" dangerouslySetInnerHTML={{ __html: remark.text }}></Box>)}
+                    {remarks && remarks.map((remark, remarkIndex) => <Box key={remarkIndex} py="2" borderTop={remarkIndex === 0 ? "none" : "lightgray solid"} fontSize="sm" dangerouslySetInnerHTML={{ __html: remark.text }}></Box>)}
                 </AccordionPanel>
             </Flex>
             <Flex justify="center">

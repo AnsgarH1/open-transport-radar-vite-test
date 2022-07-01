@@ -12,11 +12,12 @@ function DepartureBoard() {
                 {
                     isLoadingStations ? <Spinner /> :
                         nearbyStations.length > 0 ?
-                            nearbyStations.map((station, index) => <DepartureStation index={index} station={station} />)
+                            nearbyStations.map((station, index) => <DepartureStation key={station.id} index={index} station={station} />)
                             :
                             <Text>keine Haltestellen gefunden!</Text>
                 }
             </Box>
+            
 
         </Box>
     )
