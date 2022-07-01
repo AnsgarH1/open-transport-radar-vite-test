@@ -10,7 +10,7 @@ function Layout({ children }: { children: React.ReactNode }) {
             <GridItem>
                 <Header />
             </GridItem>
-            <GridItem alignItems="center" justifyContent="center" border="solid">
+            <GridItem alignItems="center" justifyContent="center">
 
                 {children}
 

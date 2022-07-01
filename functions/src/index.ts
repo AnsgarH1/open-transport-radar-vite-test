@@ -59,9 +59,43 @@ app.get(
             }
             const client = createClient(rmvProfile, "transport-radar");
 
-            const results = await client.departures(stationID, undefined) as any as Hafas_Departures.Departure[];
+            const results = (await client.departures(stationID, {
+                results: 20,
+                duration: 30,
+            })) as any as Hafas_Departures.Departure[];
             functions.logger.info("Hafas Results:", results);
-            return res.json(results.filter(dep=>dep.stop.id==stationID));
+            return res.json(results.filter((dep) => dep.stop.id == stationID));
+        } catch (e) {
+            functions.logger.error(e);
+            return res.status(500).json(e);
+        }
+    },
+);
+
+const tripRequestValidation = [
+    body("tripID").isString(),
+    body("lineName").isString(),
+];
+app.post(
+    "/trip",
+    tripRequestValidation,
+    async (req: express.Request, res: express.Response) => {
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json(errors.array());
+            }
+            functions.logger.info(req.body);
+            const {tripID, lineName} = req.body;
+            if (typeof tripID != "string" || typeof lineName != "string") {
+                return res.status(400);
+            }
+            const client = createClient(rmvProfile, "transport-radar");
+
+            //@ts-ignore
+            const results = await client.trip(tripID, lineName, {}) as any as HafasTrips.Trip;
+            functions.logger.info("Hafas Results:", results);
+            return res.json(results);
         } catch (e) {
             functions.logger.error(e);
             return res.status(500).json(e);
@@ -78,7 +112,6 @@ const radarRequestValidation = [
     body("frames").isInt().optional(),
     body("results").isInt().optional(),
 ];
-
 
 app.post(
     "/radar",

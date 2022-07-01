@@ -16,7 +16,7 @@ function DepartureStation({ station, index }: { station: Hafas_Stations.Station,
 
       {/**Haltestellen Überschrift */}
 
-      <Flex align="center" justify="space-between" bgColor="gray.400" >
+      <Flex align="center" justify="space-between" bgColor="#6c7b94" color="gray.100" px="2" rounded="6">
         <Box>
           <Flex align="center">
             <ProductIcon product={products} />
@@ -27,7 +27,7 @@ function DepartureStation({ station, index }: { station: Hafas_Stations.Station,
             <Text>{distance}m </Text>
           </Flex>
         </Box>
-        <IconButton aria-label="refresh" icon={<RepeatIcon />} onClick={loadDepartures} />
+        <IconButton aria-label="refresh" icon={<RepeatIcon color={"white"} />} size="md" variant="ghost" onClick={loadDepartures} />
       </Flex>
 
       {/** Abfahrten */}

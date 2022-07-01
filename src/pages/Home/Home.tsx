@@ -19,7 +19,7 @@ function Home() {
                 <GridItem bg="gray.100" colSpan={{ "base": 1, "md": 3 }} w="1fr" >
                     Suchleiste
                 </GridItem>
-                <GridItem bg="blue.100" colSpan={{ "base": 1, "md": 1 }}><DepartureBoard /></GridItem>
+                <GridItem  colSpan={{ "base": 1, "md": 1 }}><DepartureBoard /></GridItem>
                 <GridItem bg="green.100" colSpan={{ "base": 1, "md": 2 }} >Radar</GridItem>
             </Grid>
         </Layout>

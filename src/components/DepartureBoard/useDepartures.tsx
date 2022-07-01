@@ -17,7 +17,11 @@ const useDepartures = (stationId: string) => {
     setShowAll(curr => !curr)
   }
   useEffect(() => {
-    showAllButtonRef.current?.scrollIntoView({ behavior: "smooth", block: "end" })
+    if (!showAll) {
+      showAllButtonRef.current?.scrollIntoView({ behavior: "smooth", block: "end" })
+    } else {
+      window.scrollBy({ top: 500, behavior: "smooth" })
+    }
 
   }, [showAll])
 
