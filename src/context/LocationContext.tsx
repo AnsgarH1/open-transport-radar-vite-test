@@ -22,20 +22,41 @@ export function LocationContextProvider({ children }: { children: ReactNode }) {
     const [position, setPosition] = useState<GeolocationPosition>()
     const [positionError, setPositionError] = useState<GeolocationPositionError>()
     const [isLoading, setLoading] = useState(false)
+
     useEffect(() => {
+        getGeoLocation();
+    }, [])
+
+    const getGeoLocation = async () => {
         let positionWatchID: number;
         if ("geolocation" in navigator) {
             setLoading(true)
-            positionWatchID = navigator.geolocation.watchPosition(position => {
+            positionWatchID = await watchPosition()
+            console.log(`LocationContext.useEffect: positionWatchID=${positionWatchID}`)
+        }
+    }
+
+
+
+    const watchPosition = async () => {
+        var options = {
+            enableHighAccuracy: true,
+            timeout:    7000,   // time in millis when error callback will be invoked
+            maximumAge: 0,      // max cached age of gps data, also in millis
+          };
+        
+          return new Promise<number>(function(resolve, reject) {
+            navigator.geolocation.watchPosition(position => {
                 setPosition(position)
+                console.log("context: found position,", position.coords)
+
                 setLoading(false)
             }, error => {
                 setPositionError(error)
                 setLoading(false)
-            })
-
-        }
-    }, [])
+            }, options);
+          });
+    }
 
     return (
         <LocationContext.Provider value={{

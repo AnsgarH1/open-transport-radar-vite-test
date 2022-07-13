@@ -52,7 +52,7 @@ const useStations = () => {
             showLocationToast()
             navigator.geolocation.getCurrentPosition(position => {
                 updateLocationToast({ status: "success", description: "Standort gefunden!", duration: 2000 })
-                console.log("found position,", position.coords)
+                //console.log("found position,", position.coords)
                 setCoords(position.coords)
                 /** Get Nearby Stations with found coordinates */
                 loadStations(position.coords.latitude, position.coords.longitude)

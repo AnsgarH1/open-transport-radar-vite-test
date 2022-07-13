@@ -1,9 +1,10 @@
-import { Heading, Text, Container, Grid, GridItem } from '@chakra-ui/react'
+import { Heading, Text, Container, Grid, GridItem, Button } from '@chakra-ui/react'
 import React from 'react'
 import { Layout } from '../../components'
 import DepartureBoard from '../../components/DepartureBoard/DepartureBoard'
 import { LocationContextProvider } from '../../context/LocationContext'
 import Map from '../../components/Map/Map'
+import useMap from '../../components/Map/useMap'
 
 function Home() {
     return (
@@ -23,7 +24,7 @@ function Home() {
                 </GridItem>
                 <GridItem bg="blue.100" colSpan={{ "base": 1, "md": 1 }}><DepartureBoard /></GridItem>
                 <LocationContextProvider>
-                    <GridItem bg="green.100" colSpan={{ "base": 1, "md": 2 }} ><Map /></GridItem>
+                    <GridItem colSpan={{ "base": 1, "md": 2 }} ><Map /></GridItem>
                 </LocationContextProvider>
             </Grid>
         </Layout>
