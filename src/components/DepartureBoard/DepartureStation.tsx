@@ -36,13 +36,13 @@ function DepartureStation({ station, index }: { station: Hafas_Stations.Station,
         <Spinner alignSelf={"center"} />
       ) : (
         <Box px="2">
-          <Accordion >
+          <Accordion allowToggle >
             {
-              departures.map((departure, i) => <DepartureItem key={departure.tripID} departure={departure} index={i} />)
+              departures.map((departure, i) => <DepartureItem key={departure.tripId} departure={departure} index={i} />)
             }
           </Accordion>
-          { showMoreAvailable &&
-            <Button leftIcon={showAll? <ChevronUpIcon/>:<ChevronDownIcon />} w="full" size="xs" my="2" ref={showAllButtonRef} onClick={toggleShowAll}>Zeige {showAll ? "weniger" : "mehr"} Abfahrten</Button>
+          {showMoreAvailable &&
+            <Button leftIcon={showAll ? <ChevronUpIcon /> : <ChevronDownIcon />} w="full" size="xs" my="2" ref={showAllButtonRef} onClick={toggleShowAll}>Zeige {showAll ? "weniger" : "mehr"} Abfahrten</Button>
           }</Box>
       )}
     </Box >

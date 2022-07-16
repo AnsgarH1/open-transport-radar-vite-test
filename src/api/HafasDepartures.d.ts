@@ -48,7 +48,7 @@ declare namespace Hafas_Departures {
     type: string;
     id: string;
     fahrtNr: string;
-    name: string;
+    name?: string;
     public: boolean;
     adminCode: string;
     productName: string;

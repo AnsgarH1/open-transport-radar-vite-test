@@ -1,17 +1,17 @@
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Flex, Heading, Icon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Spinner, Text, useBoolean, useDisclosure } from '@chakra-ui/react'
+import { AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Flex, Heading, Icon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Spinner, Text, useBoolean, useDisclosure } from '@chakra-ui/react'
 import { FcCancel } from "react-icons/fc"
-import { DateTime } from "luxon"
-import { useEffect } from 'react'
-import { useDepartureTime } from './departureHooks/useDepartureTime'
+
+import { useDepartureTime } from '../../commonHooks/useDepartureTime'
 import { InfoIcon } from '@chakra-ui/icons'
 import useTrip from './departureHooks/useTrip'
+import TripView from '../TripView/TripView'
 
 function DepartureItem({ departure, index }: { departure: Hafas_Departures.Departure, index: number }) {
 
-    const { line, platform, destination, cancelled, when, plannedWhen, remarks, direction, tripId} = departure
+    const { line, platform, destination, cancelled, when, plannedWhen, remarks, direction, tripId } = departure
     const { displayDepartureTime, delayed, delay } = useDepartureTime(when, plannedWhen)
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const { trip, isLoading, loadTrip } = useTrip(tripId, line.name)
+    const { trip, isLoading, loadTrip } = useTrip(tripId, line.name || line.fahrtNr)
 
     if (cancelled) return (
         <Flex direction="column" borderTop={index === 0 ? "none" : "lightgrey solid 0.1px "} >
@@ -34,15 +34,15 @@ function DepartureItem({ departure, index }: { departure: Hafas_Departures.Depar
                         <Flex justify={"space-between"} p="0" m="0" >
 
                             <Flex align="center">
-                                {platform && <Box border="solid 1px" bgColor="blue.700" color="white" px="1" rounded="md" mr="1">{platform}</Box>}
-                                <Heading size="sm">{line.name}</Heading>
+                                {platform && <Box border="solid 1px" bgColor="blue.700" color="white" px="1" rounded="md" mr="1" whiteSpace={"nowrap"}>{platform}</Box>}
+                                <Heading size="sm">{line.name || "LineName"}</Heading>
                             </Flex>
-                            <Flex align={"center"}>
+                            <Flex align={"center"} justifyContent="end"  >
                                 {!!delay && <Text fontSize={"sm"} pr="2">{ }({delay} Min. verspätet)</Text>}
                                 <Text >{displayDepartureTime}</Text>
                             </Flex>
                         </Flex>
-                        <Text align="left" fontSize={"xl"}>{destination.name}</Text>
+                        <Text align="left" fontSize={"xl"}>{destination?.name || direction || "RMV-Datenfehler: Ziel nicht angegeben"}</Text>
 
                     </Box>
 
@@ -50,7 +50,7 @@ function DepartureItem({ departure, index }: { departure: Hafas_Departures.Depar
                 <AccordionPanel>
 
                     <Text>Betreiber: {line.operator?.name || "keine Info vorhanden"}</Text>
-                    <Text onClick={onOpen}><InfoIcon mr="2" />Es liegen aktuelle Meldungen vor</Text>
+                    <Text onClick={onOpen} mt="2" ><InfoIcon mr="2" />Es liegen aktuelle Meldungen vor</Text>
                     <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
                         <ModalContent>
@@ -62,9 +62,8 @@ function DepartureItem({ departure, index }: { departure: Hafas_Departures.Depar
                             </ModalBody>
                         </ModalContent>
                     </Modal>
-                    <Text>TODO: nächste Stops anzeigen</Text>
-                    {trip ? trip.origin.name :
-                        <Button w="full" onClick={loadTrip} isLoading={isLoading}>Lade gesamte Fahrt</Button>}
+                    {trip ? <TripView trip={trip} /> :
+                        <Button w="full" size="xs" mt="4" onClick={loadTrip} isLoading={isLoading}>Lade gesamte Fahrt</Button>}
 
                 </AccordionPanel>
             </Flex>
