@@ -1,6 +1,6 @@
 import { Box, Flex } from '@chakra-ui/react'
 import React from 'react'
-import { useDepartureTime } from '../../commonHooks/useDepartureTime'
+import { useDepartureTime } from '../DepartureBoard/departureHooks/useDepartureTime'
 import "./tripStation.css"
 import { useTripStationTimes } from './useTripViewTime'
 

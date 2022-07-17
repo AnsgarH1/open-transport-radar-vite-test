@@ -1,7 +1,7 @@
 import { AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Flex, Heading, Icon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Spinner, Text, useBoolean, useDisclosure } from '@chakra-ui/react'
 import { FcCancel } from "react-icons/fc"
 
-import { useDepartureTime } from '../../commonHooks/useDepartureTime'
+import { useDepartureTime } from './departureHooks/useDepartureTime'
 import { InfoIcon } from '@chakra-ui/icons'
 import useTrip from './departureHooks/useTrip'
 import TripView from '../TripView/TripView'
