@@ -8,18 +8,18 @@ function TripStation({ tripStation, variant }: { tripStation: Hafas_Trip.Stopove
 
     const { arrivalDelayed, arrivalTime, departureDelayed, departureTime } = useTripStationTimes(tripStation.departure, tripStation.plannedDeparture, tripStation.arrival, tripStation.plannedArrival)
     return (
-        <Flex align="center" pb="15px">
-            <Box pr="2" textAlign={"center"} >
+        <Flex align="center" pb="15px" justifyItems={"center"}>
+            <Box textAlign={"center"} w="4rem" >
                 <p color={arrivalDelayed ? "red" : "green"}>{arrivalTime}</p>
                 <p>{departureTime}</p>
             </Box>
-            <div className="stationIndicator">
+            <Box w="20px" className="stationIndicator" >
 
                 {variant != "top" && <div className="stationLine stationLineTop"></div>}
                 <div className="stationDot"></div>
                 {variant != "bottom" && <div className="stationLine stationLineBottom"></div>}
-            </div>
-            <Box pl="2">
+            </Box>
+            <Box pl="2" flex="1">
                 {tripStation.stop.name}
             </Box>
         </Flex>
