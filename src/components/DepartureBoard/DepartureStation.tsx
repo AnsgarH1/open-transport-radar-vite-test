@@ -12,16 +12,16 @@ function DepartureStation({ station, index }: { station: Hafas_Stations.Station,
   const { departures, isLoading, loadDepartures } = useDepartures(id);
 
   return (
-    <Box key={station.id + index} rounded="md" bgColor="white" my="1" flex="1" alignItems={"center"}>
-      <Flex align="center" justify="space-between" bgColor="gray.400" p="2">
+    <Box key={station.id + index} rounded="lg" p="2" m="2" boxShadow="lg" bgColor="white" my="1" flex="1" alignItems={"center"}>
+      <Flex align="center" justify="space-between" bgColor="gray.800" p="2">
         <Box>
           <Flex align="center">
             <ProductIcon product={products} />
-            <Heading size="md">{name}</Heading>
+            <Heading size="md" color="white">{name}</Heading>
           </Flex>
           <Flex align="center">
-            <Icon mr="2" size="xs" as={FaLocationArrow} />
-            <Text>{distance}m </Text>
+            <Icon mr="2" size="xs" color="white" as={FaLocationArrow} />
+            <Text color="white">{distance}m </Text>
           </Flex>
         </Box>
         <IconButton aria-label="refresh" icon={<RepeatIcon />} onClick={loadDepartures} />

@@ -24,10 +24,10 @@ function DepartureItem({ departure, index }: { departure: Hafas_Departures.Depar
     )
 
     return (
-        <AccordionItem >
-            <Flex direction="column" borderTop={index === 0 ? "none" : "lightgrey solid"}>
+        <AccordionItem rounded="lg" boxShadow='xs' m="2" border={0}>
+            <Flex direction="column">
                 <AccordionButton>
-                    <Box w="100%">
+                    <Box w="100%" >
 
                         <Flex justify={"space-between"} p="0" m="0" >
 
@@ -41,12 +41,12 @@ function DepartureItem({ departure, index }: { departure: Hafas_Departures.Depar
                             </Flex>
                         </Flex>
 
-                        <Text align="left" fontSize={"xl"}>{destination.name}</Text>
+                        <Text align="left" fontSize={"lg"}>{destination.name}</Text>
 
                     </Box>
 
                 </AccordionButton>
-                <AccordionPanel>
+                <AccordionPanel >
                     <Text>Betreiber: {line.operator?.name || "keine Info vorhanden"}</Text>
                     <Text>Fahrt-Nr. {line.fahrtNr}</Text>
                     {remarks && remarks.map((remark, remarkIndex) => <Box py="2" borderTop={remarkIndex === 0 ? "none" : "lightgray solid"} fontSize="sm" dangerouslySetInnerHTML={{ __html: remark.text }}></Box>)}

@@ -27,7 +27,7 @@ const useRadar = () => {
       .then((radar) => {
         if (radar) {
           setRadar(radar);
-          console.log(radar);
+          // console.log(radar);
         }
       }).catch(error => {
         console.error(error)

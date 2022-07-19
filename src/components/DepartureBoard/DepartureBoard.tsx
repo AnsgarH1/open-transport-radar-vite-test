@@ -7,14 +7,14 @@ function DepartureBoard() {
     const { nearbyStations, isLoadingStations } = useStations()
 
     return (
-        <Box>
-            <Box bgColor="gray.300" p="0" m="0">
+        <Box pt="1" m="0">
+            <Box >
                 {
-                    isLoadingStations ? <Spinner /> :
+                    isLoadingStations ? <Spinner color="white"/> :
                         nearbyStations.length > 0 ?
                             nearbyStations.map((station, index) => <DepartureStation index={index} station={station} />)
                             :
-                            <Text>keine Haltestellen gefunden!</Text>
+                            <Text fontSize='lg' fontWeight='bold' textAlign="center">keine Haltestellen gefunden!</Text>
                 }
             </Box>
 

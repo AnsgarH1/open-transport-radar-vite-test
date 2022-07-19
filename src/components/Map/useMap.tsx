@@ -81,9 +81,10 @@ const useMap = (
 
     useEffect(() => {
 
+        console.log("\n#### useMap.useEffect ###\n")
         if (!map) return; //warte auf init der map
         setLoadingMap(false)
-        if (isLoadingMap || !currentLocation) {
+        if (isLoadingLocation || !currentLocation) {
             console.log(`useMap.useEffect: ${locationError?.message}  ${currentLocation}`);
             return;
         }
@@ -101,7 +102,7 @@ const useMap = (
             }
         })
 
-    }), [];
+    }), [isLoadingLocation];
 
 
     function getLocation(vehicle: Hafas_Radar.Radar): FeatureCollection<Geometry, GeoJsonProperties> | undefined {

@@ -1,4 +1,4 @@
-import { Heading, Text, Container, Grid, GridItem, Button } from '@chakra-ui/react'
+import { Heading, Text, Container, Grid, GridItem, Button,Box } from '@chakra-ui/react'
 import React from 'react'
 import { Layout } from '../../components'
 import DepartureBoard from '../../components/DepartureBoard/DepartureBoard'
@@ -19,13 +19,19 @@ function Home() {
                 templateRows={{ "base": "4rem auto 1fr", "md": "4rem auto" }}
 
             >
-                <GridItem bg="gray.100" colSpan={{ "base": 1, "md": 3 }} w="1fr" >
+                <GridItem bg="white" rounded="lg" boxShadow='lg' colSpan={{ "base": 1, "md": 3 }} w="1fr" >
                     Suchleiste
                 </GridItem>
-                <GridItem bg="blue.100" colSpan={{ "base": 1, "md": 1 }}><DepartureBoard /></GridItem>
+
+                <GridItem bg="gray.700" rounded="lg" boxShadow='lg' colSpan={{ "base":1, "md": 1 }}><DepartureBoard /></GridItem>
                 <LocationContextProvider>
-                    <GridItem colSpan={{ "base": 1, "md": 2 }} ><Map /></GridItem>
+                    <GridItem rounded="lg" boxShadow='lg' colSpan={{ "base": 1, "md": 2 }} >
+                        {/* <Box > */}
+                            <Map />
+                        {/* </Box> */}
+                    </GridItem>
                 </LocationContextProvider>
+                
             </Grid>
         </Layout>
     )
