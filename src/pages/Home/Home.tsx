@@ -1,27 +1,28 @@
 import { Heading, Text, Container, Grid, GridItem } from '@chakra-ui/react'
-import React from 'react'
+
 import { Layout } from '../../components'
 import DepartureBoard from '../../components/DepartureBoard/DepartureBoard'
 
 function Home() {
     return (
         <Layout>
+
             <Grid
-                m={{ "base": "0", "sm": "0", "md": "0 auto" }}
-                px="2"
-                maxW="100vw"
-                minH="100vh"
-                gap={{ "base": "0.5rem", "md": "2rem" }}
+                h="100%"
+                py={{ "base": "0.5rem", "md": "0.5rem" }}
+                px={{ "base": "0.1rem", "md": "0.5rem" }}
+                gap={{ "base": "0.5rem", "md": "0.5rem" }}
                 templateColumns={{ "base": "1fr", "md": "repeat(3,1fr)" }}
-                templateRows={{ "base": "4rem auto 1fr", "md": "4rem auto" }}
+                templateRows={{ "base": "2rem 1fr", "md": "4rem 1fr" }}
 
             >
-                <GridItem bg="gray.100" colSpan={{ "base": 1, "md": 3 }} w="1fr" >
+                <GridItem bg="gray.100" colSpan={{ "base": 1, "md": 3 }}  >
                     Suchleiste
                 </GridItem>
-                <GridItem  colSpan={{ "base": 1, "md": 1 }}><DepartureBoard /></GridItem>
-                <GridItem bg="green.100" colSpan={{ "base": 1, "md": 2 }} >Radar</GridItem>
+                <GridItem h="100%" w="100%" overflowY="scroll" colSpan={{ "base": 1, "md": 1 }}><DepartureBoard /></GridItem>
+                <GridItem bg="green.500" h="100%" colSpan={{ "base": 1, "md": 2 }} >Radar</GridItem>
             </Grid>
+
         </Layout>
     )
 }

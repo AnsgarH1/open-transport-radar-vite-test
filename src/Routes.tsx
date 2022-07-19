@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Routes,Route } from 'react-router-dom'
-import { Home, Settings } from './src/pages'
-import Feedback from './src/pages/Feedback/Feedback'
+import { Home, Settings } from './pages'
+import Feedback from './pages/Feedback/Feedback'
 
 
 function AppRoutes() {

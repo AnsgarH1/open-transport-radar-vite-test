@@ -15,6 +15,7 @@ function Header() {
                 justify="space-between"
                 borderBottom={1}
                 borderStyle={'solid'}
+                
                 borderColor={'gray.200'}
             >
                 <IconButton
