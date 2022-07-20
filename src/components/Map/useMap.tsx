@@ -37,13 +37,7 @@ const useMap = () => {
     useEffect(() => {
         console.log("isLoadingLocation;", isLoadingLocation)
         const m = initMap() //initialize map
-        // if(!m){
-        //     console.log("IS UNDEFINDED")
-        //     reset();
-        // } else {
-        //     console.log("IS DEFINED")
-        // }
-        //return cleanup();
+      
         addUserLayer();
 
     }), [isLoadingLocation, currentLocation];
