@@ -13,8 +13,6 @@ const useRadar = () => {
   const [east, setEast] = useState(0)
   //const { currentLocation, locationError, browserSupported, isLoadingLocation } = useContext(LocationContext)
 
-
-
   function loadRadar(lat:number,lng:number) {
     setLoadingRadar(true);
 
@@ -27,7 +25,7 @@ const useRadar = () => {
       .then((radar) => {
         if (radar) {
           setRadar(radar);
-          // console.log(radar);
+          console.log("useRadar: radar gesetzt");
         }
       }).catch(error => {
         console.error(error)
@@ -46,6 +44,15 @@ const useRadar = () => {
   }
 
  
+  // useEffect(() => {
+  //   console.log("useRadar.useEffect")
+  //   if(!currentLocation) return;
+  //     setNorth(currentLocation.coords.latitude + radius)
+  //     setWest(currentLocation.coords.longitude - radius)
+  //     setSouth(currentLocation.coords.latitude - radius)
+  //     setEast(currentLocation.coords.longitude + radius)
+  //     loadRadar();
+  // },[isLoadingLocation, currentLocation])
 
   // useEffect(() => {
   //   const a = async () => {
