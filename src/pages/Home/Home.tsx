@@ -19,13 +19,14 @@ function Home() {
                 templateRows={{ "base": "4rem auto 1fr", "md": "4rem auto" }}
 
             >
-                <GridItem bg="white" rounded="lg" boxShadow='lg' colSpan={{ "base": 1, "md": 3 }} w="1fr" >
+                <GridItem bg="white" mt="2" rounded="lg" boxShadow='lg' colSpan={{ "base": 1, "md": 3 }} w="1fr" >
                     Suchleiste
                 </GridItem>
 
                 <GridItem bg="gray.700" rounded="lg" boxShadow='lg' colSpan={{ "base":1, "md": 1 }}><DepartureBoard /></GridItem>
                 <LocationContextProvider>
                     <GridItem rounded="lg" boxShadow='lg' colSpan={{ "base": 1, "md": 2 }} >
+                        
                         {/* <Box > */}
                             <Map />
                         {/* </Box> */}

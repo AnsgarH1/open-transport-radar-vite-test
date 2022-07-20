@@ -8,9 +8,9 @@ function Layout({ children }: { children: React.ReactNode }) {
     return (
         <Grid minH="100vh" templateRows="auto 1fr auto" bgColor={"gray.50"}>
             <GridItem>
-                <Header />
+                <Header/>
             </GridItem>
-            <GridItem alignItems="center" justifyContent="center" border="solid">
+            <GridItem alignItems="center" justifyContent="center" >
 
                 {children}
 

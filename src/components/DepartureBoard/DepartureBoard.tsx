@@ -14,7 +14,7 @@ function DepartureBoard() {
                         nearbyStations.length > 0 ?
                             nearbyStations.map((station, index) => <DepartureStation index={index} station={station} />)
                             :
-                            <Text fontSize='lg' fontWeight='bold' textAlign="center">keine Haltestellen gefunden!</Text>
+                            <Text fontSize='lg' color="white" fontWeight='bold' textAlign="center">keine Haltestellen gefunden!</Text>
                 }
             </Box>
 
