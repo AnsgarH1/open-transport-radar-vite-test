@@ -20,21 +20,26 @@ const useDepartureTime = (when: Date | null, plannedWhen: Date) => {
         const delta = (dt).diffNow("minutes").minutes
         const roundedDelta = Math.abs(Math.round(delta))
 
+
         if (delta >= 1 && delta < 15) {
             return `in ${roundedDelta} Min.`
-        } else if (delta < 1 && delta > -1) {
-            return `jetzt`
-        } else if (delta < -1) {
-            return `vor ${roundedDelta} Min.`
+        } else if (delta < 1 && delta >= 0) {
+            return `weniger als 1 Minute`
+
         } else {
-            return `um ${dt.toLocaleString(DateTime.TIME_24_SIMPLE)}`
+            return `${dt.toLocaleString(DateTime.TIME_24_SIMPLE)}`
         }
+    }
+
+    function get24HourFormat(time: Date): string {
+        const dt = DateTime.fromJSDate(time)
+        return `${dt.toLocaleString(DateTime.TIME_24_SIMPLE)}`
     }
 
     return {
         displayDepartureTime: getDisplayTime(usedDepartureTime),
         delayed: when ? when !== plannedWhen : undefined,
-
+        display24HourFormat: get24HourFormat(usedDepartureTime),
         delay: getDelay(plannedWhen, when)
     }
 }

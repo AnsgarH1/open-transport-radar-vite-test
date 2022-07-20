@@ -1,6 +1,6 @@
 declare namespace Hafas_Departures {
   export interface Departure {
-    tripID: string;
+    tripId: string;
     stop: Destination;
     when: Date | null;
     plannedWhen: Date;
@@ -48,7 +48,7 @@ declare namespace Hafas_Departures {
     type: string;
     id: string;
     fahrtNr: string;
-    name: string;
+    name?: string;
     public: boolean;
     adminCode: string;
     productName: string;

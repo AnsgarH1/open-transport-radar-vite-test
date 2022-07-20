@@ -1,19 +1,27 @@
-import { RepeatIcon } from "@chakra-ui/icons";
-import { Accordion, Box, Flex, Heading, Icon, IconButton, Spinner, Text } from "@chakra-ui/react";
+import { ChevronDownIcon, ChevronUpIcon, RepeatIcon } from "@chakra-ui/icons";
+import { Accordion, Box, Button, Flex, Heading, Icon, IconButton, Skeleton, Spinner, Text, useColorModeValue } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { FaBus, FaLocationArrow } from "react-icons/fa";
 import ProductIcon from "../ProductIcon/ProductIcon";
 import DepartureItem from "./DepartureItem";
-import useDepartures from "./useDepartures";
+import useDepartures from "./departureHooks/useDepartures";
+
+
 
 function DepartureStation({ station, index }: { station: Hafas_Stations.Station, index: number }) {
   const { name, distance, products, id, type } = station;
 
-  const { departures, isLoading, loadDepartures } = useDepartures(id);
+  const { departures, isLoading, loadDepartures, toggleShowAll, showAll, showAllButtonRef, showMoreAvailable } = useDepartures(id);
+
+  const prime = useColorModeValue("primary", "secondary")
+  const sec = useColorModeValue("secondary", "primary")
 
   return (
-    <Box key={station.id + index} rounded="lg" p="2" m="2" boxShadow="inner" bgColor="white" my="1" flex="1" alignItems={"center"}>
-      <Flex align="center" justify="space-between" boxShadow="lg" bgColor="gray.800" p="2">
+    <Box key={station.id + index} rounded="lg" p="2" m="2" bgColor={prime} boxShadow="inner" my="2" flex="1" alignItems={"center"}>
+
+      {/**Haltestellen Überschrift */}
+
+      <Flex align="center" justify="space-between" bgColor={sec} rounded="lg" boxShadow="lg" color={prime} px="2" >
         <Box>
           <Flex align="center">
             <ProductIcon product={products} />
@@ -24,17 +32,44 @@ function DepartureStation({ station, index }: { station: Hafas_Stations.Station,
             <Text color="white">{distance}m </Text>
           </Flex>
         </Box>
-        <IconButton aria-label="refresh" icon={<RepeatIcon />} onClick={loadDepartures} />
+        <IconButton aria-label="refresh" icon={<RepeatIcon color={prime} />} size="md" variant="ghost" onClick={loadDepartures} />
       </Flex>
-      <Accordion px="2">
 
-        {isLoading ? (
-          <Spinner alignSelf={"center"} />
-        ) : (
-          departures.map((departure, i) => <DepartureItem key={departure.tripID} departure={departure} index={i} />)
-        )}
-      </Accordion>
-    </Box>
+      {/** Abfahrten */}
+
+      {isLoading ? (
+        <Box m="1">
+          <Flex w="100%">
+            <Skeleton h="1.3rem" w="1rem" mr="1" color={"blue.300"}/>
+            <Skeleton h="1.3rem" w="full" />
+          </Flex>
+          <Skeleton h="2rem" w="full" mt="1" />
+          <Flex w="100%" mt="2">
+            <Skeleton h="1.3rem" w="1rem" mr="1" />
+            <Skeleton h="1.3rem" w="full" />
+          </Flex>
+          <Skeleton h="2rem" w="full" mt="1" />
+          <Flex w="100%" mt="2">
+            <Skeleton h="1.3rem" w="1rem" mr="1" />
+            <Skeleton h="1.3rem" w="full" />
+          </Flex>
+          <Skeleton h="2rem" w="full" mt="1" />
+        </Box>
+
+
+      ) : (
+        <Box px="2">
+          <Accordion allowToggle >
+            {
+              departures.map((departure, i) => <DepartureItem key={departure.tripId} departure={departure} index={i} />)
+            }
+          </Accordion>
+          {showMoreAvailable &&
+            <Button leftIcon={showAll ? <ChevronUpIcon /> : <ChevronDownIcon />} w="full" size="xs" my="2" ref={showAllButtonRef} onClick={toggleShowAll}>Zeige {showAll ? "weniger" : "mehr"} Abfahrten</Button>
+          }</Box>
+      )
+      }
+    </Box >
   );
 }
 

@@ -1,6 +1,6 @@
 import { createStandaloneToast, ToastId, useToast, UseToastOptions } from '@chakra-ui/react'
 import { useEffect, useRef, useState } from 'react'
-import { getStations } from '../../api/stations'
+import { getStations } from '../../../api/stations'
 
 const useStations = () => {
 

@@ -59,7 +59,46 @@ app.get(
             }
             const client = createClient(rmvProfile, "transport-radar");
 
-            const results = await client.departures(stationID, undefined);
+            const results = (await client.departures(stationID, {
+                results: 20,
+                duration: 30,
+            })) as any as Hafas_Departures.Departure[];
+            functions.logger.info("Hafas Results:", results);
+            return res.json(results.filter((dep) => dep.stop.id == stationID));
+        } catch (e) {
+            functions.logger.error(e);
+            return res.status(500).json(e);
+        }
+    },
+);
+
+const tripRequestValidation = [
+    body("tripID").isString(),
+    body("lineName").isString(),
+];
+app.post(
+    "/trip",
+    tripRequestValidation,
+    async (req: express.Request, res: express.Response) => {
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json(errors.array());
+            }
+            functions.logger.info(req.body);
+            const {tripID, lineName} = req.body;
+            if (typeof tripID != "string" || typeof lineName != "string") {
+                return res.status(400).json(JSON.stringify("tripID and lineName must be of type string!"));
+            }
+            const client = createClient(rmvProfile, "transport-radar");
+
+            let results = undefined;
+            if(client.trip){
+                 results = await client.trip(tripID, lineName, {}) as any as HafasTrips.Trip;
+            }else{
+                throw Error("Unexpected HAFAS Error! No Trips available on HafasClient!")
+            }
+          
             functions.logger.info("Hafas Results:", results);
             return res.json(results);
         } catch (e) {
@@ -79,7 +118,7 @@ const radarRequestValidation = [
     body("results").isInt().optional(),
 ];
 
-app.get(
+app.post(
     "/radar",
     radarRequestValidation,
     async (req: express.Request, res: express.Response) => {

@@ -1,24 +1,25 @@
 import React from 'react'
 import Footer from '../Footer/Footer'
 import Header from '../Header/Header'
-import { Grid, GridItem, Box, Flex } from "@chakra-ui/react";
+import {  Box, Flex } from "@chakra-ui/react";
 
 
 function Layout({ children }: { children: React.ReactNode }) {
     return (
-        <Grid minH="100vh" templateRows="auto 1fr auto" bgColor={"gray.50"}>
-            <GridItem>
-                <Header/>
-            </GridItem>
-            <GridItem alignItems="center" justifyContent="center" >
+        <Flex h="100vh" w="100vw" justifyContent={"space-between"} direction="column" >
+            <Box>
+                <Header />
+            </Box>
 
+            <Box flex="1" overflow={"hidden"}>
                 {children}
 
-            </GridItem>
-            <GridItem>
+            </Box>
+            <Box>
                 <Footer />
-            </GridItem>
-        </Grid>
+            </Box>
+
+        </Flex>
     )
 }
 

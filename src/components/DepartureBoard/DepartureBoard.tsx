@@ -1,22 +1,23 @@
-import { Box, Button, Flex, Heading, List, ListItem, Spinner, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Heading, List, ListItem, Skeleton, Spinner, Text, useColorMode, useColorModeValue } from '@chakra-ui/react'
 import DepartureStation from './DepartureStation'
-import useStations from './useStations'
+import useStations from './departureHooks/useStations'
 
 function DepartureBoard() {
 
     const { nearbyStations, isLoadingStations } = useStations()
 
     return (
-        <Box pt="1" m="0">
-            <Box >
+        <Box>
+            <Box minH="24rem" p="0" m="0" >
                 {
-                    isLoadingStations ? <Spinner color="white"/> :
+                    isLoadingStations ? <Skeleton m="1" h="4rem" rounded={6} /> :
                         nearbyStations.length > 0 ?
-                            nearbyStations.map((station, index) => <DepartureStation index={index} station={station} />)
+                            nearbyStations.map((station, index) => <DepartureStation key={station.id} index={index} station={station} />)
                             :
-                            <Text fontSize='lg' color="white" fontWeight='bold' textAlign="center">keine Haltestellen gefunden!</Text>
+                            <Text pt="4rem" align={"center"} color={useColorModeValue("primary", "secondary")}>keine Haltestellen geladen 🙁</Text>
                 }
             </Box>
+
 
         </Box>
     )
