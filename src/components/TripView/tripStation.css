@@ -1,0 +1,39 @@
+.stationIndicator {
+  height: 50px;
+  width: 45px;
+  position: relative;
+}
+
+.stationDot {
+  position: absolute;
+  height: 12px;
+  width: 12px;
+  margin: 0;
+  padding: 0;
+  margin-top: 19px;
+  background-color: white;
+  z-index: 20;
+  border-color: var(--chakra-colors-gray-600);
+  border-width: 0.5px;
+
+  border-radius: 50%;
+  display: inline-block;
+}
+.stationLine {
+  z-index: 10;
+  position: absolute;
+  height: 19px;
+  width: 2px;
+  margin-left: 5px;
+  background-color: var(--chakra-colors-gray-600);
+}
+
+.stationLineTop {
+  margin-top: 0px;
+  height: 30px;
+}
+
+.stationLineBottom {
+  margin-top: 31px;
+  height: 35px;
+}
