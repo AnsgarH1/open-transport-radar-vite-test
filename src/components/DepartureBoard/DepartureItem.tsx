@@ -29,7 +29,7 @@ function DepartureItem({ departure, index }: { departure: Hafas_Departures.Depar
     )
 
     return (
-        <AccordionItem rounded="lg" borderWidth="1px" borderColor={useColorModeValue("gray.200","gray.700")}  m="2">
+        <AccordionItem rounded="lg" borderWidth="1px" borderColor={useColorModeValue("gray.200", "gray.700")} m="2">
             <Flex direction="column" >
                 <AccordionButton>
                     <Box w="100%" >

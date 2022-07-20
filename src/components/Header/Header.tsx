@@ -17,6 +17,7 @@ function Header() {
                 h="16"
                 py="4"
                 px="6"
+                bg="white"
                 justify="space-between"
                 borderBottom={1}
                 borderStyle={'solid'}

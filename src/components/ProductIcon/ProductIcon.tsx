@@ -14,10 +14,11 @@ function ProductIcon({ product }: { product: Hafas_Stations.Products }) {
     product.regionaTrain ||
     product.sBahn
   )
-    return <Icon as={MdTrain} />;
-  if (product.uBahn) return <Icon as={MdSubway} />;
-  if (product.bus) return <Icon as={MdDirectionsBus} />;
-  if (product.watercraft) return <Icon as={MdDirectionsBoat} />;
-  return <Icon as={MdLocationPin} />;
+    return <Icon color="white" as={MdTrain} />;
+  if (product.uBahn) return <Icon color="white" as={MdSubway} />;
+  if (product.bus) return <Icon color="white" as={MdDirectionsBus} />;
+  if (product.watercraft) return <Icon color="white" as={MdDirectionsBoat} />;
+  return <Icon color="white" as={MdLocationPin} />;
+  //TODO color in css
 }
 export default ProductIcon;
