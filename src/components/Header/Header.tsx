@@ -1,11 +1,16 @@
 import React from 'react'
-import { Box, Button, Center, Flex, Heading, useColorMode, Avatar, HStack, IconButton, useDisclosure, Menu, MenuButton, MenuItem, MenuDivider, MenuList, Stack } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Heading, useColorMode, Avatar, HStack, IconButton, useDisclosure, Menu, MenuButton, MenuItem, MenuDivider, MenuList, Stack, useColorModeValue } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import { CloseIcon, HamburgerIcon, QuestionOutlineIcon, SettingsIcon } from '@chakra-ui/icons';
 
 
 function Header() {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const {colorMode, toggleColorMode} = useColorMode();
+
+    const prime = useColorModeValue("primary", "secondary")
+    const sec = useColorModeValue("secondary", "primary")
+
     return (
         <Box >
             <Flex
@@ -26,7 +31,7 @@ function Header() {
                     onClick={isOpen ? onClose : onOpen}
                 />
                 <Center>
-                    <Heading color={"gray.800"} size={["sm","md","xl"]}>Open Transport Radar</Heading>
+                    <Heading color={sec} size={["sm","md","xl"]}>Open Transport Radar</Heading>
                 </Center>
                 <Center display={{ base: 'none', md: 'flex' }}>
                     <Box mx={"2rem"}>
@@ -34,6 +39,11 @@ function Header() {
                     </Box>
                     <Box mx={"2rem"} mr={"4rem"}>
                         <NavLink to={"/feedback"}>Contact</NavLink>
+                    </Box>
+                    <Box>
+                    <Button onClick={toggleColorMode}>
+                        Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
+                    </Button>
                     </Box>
                     <Menu>
                         <MenuButton>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Button, FormControl, FormLabel, FormErrorMessage,
-  FormHelperText, Heading, Input, Textarea, Select, VStack, Flex, Box } from '@chakra-ui/react'
+  FormHelperText, Heading, Input, Textarea, Select, VStack, Flex, Box, useColorModeValue } from '@chakra-ui/react'
 import Layout from '../../components/Layout/Layout';
 import { Field, Form, Formik, FormikProps } from "formik";
 import { CSSTransition } from 'react-transition-group';
@@ -34,6 +34,9 @@ function Feedback() {
     text: ''
   }
 
+  const prime = useColorModeValue("primary", "secondary")
+  const sec = useColorModeValue("secondary", "primary")
+
   const ValidationSchema = Yup.object().shape({
     firstname: Yup.string()
       .min(2, 'Vorname zu kurz!')
@@ -57,7 +60,7 @@ function Feedback() {
 
   return (
     <Layout>
-      <Flex bg="gray.100" align="center" justify="center" h="100vh">
+      <Flex bg={useColorModeValue("tertiary", "quartiary")} align="center" justify="center" h="100vh">
 
         <CSSTransition
           in={showMessage}
@@ -76,7 +79,7 @@ function Feedback() {
         unmountOnExit
         onExited={() => setShowMessage(true)}
         >
-          <Box bg="white" p={6} rounded="md" w={600}>
+          <Box bg={prime} p={6} boxShadow="lg" rounded="lg" w="40rem">
             <Heading as='h2' size='xl'>Kontaktformular</Heading><br/>
             <Formik 
               initialValues={initialValues}
@@ -146,7 +149,9 @@ function Feedback() {
                   </FormControl>
 
                   <Button
-                    colorScheme='teal'
+                    bgColor={sec}
+                    color={prime}
+                    boxShadow="lg"
                     size='md'
                     type="submit"
                   >

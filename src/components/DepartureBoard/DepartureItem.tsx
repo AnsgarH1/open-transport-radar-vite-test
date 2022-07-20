@@ -1,4 +1,4 @@
-import { AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Flex, Heading, Icon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Spinner, Text, useBoolean, useDisclosure } from '@chakra-ui/react'
+import { AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Flex, Heading, Icon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Spinner, Text, useBoolean, useColorModeValue, useDisclosure } from '@chakra-ui/react'
 import { FcCancel } from "react-icons/fc"
 
 import { useDepartureTime } from './departureHooks/useDepartureTime'
@@ -13,6 +13,9 @@ function DepartureItem({ departure, index }: { departure: Hafas_Departures.Depar
     const { isOpen, onOpen, onClose } = useDisclosure()
     const { trip, isLoading, loadTrip } = useTrip(tripId, line.name || line.fahrtNr)
 
+    const prime = useColorModeValue("primary", "secondary")
+    const sec = useColorModeValue("secondary", "primary")
+
     if (cancelled) return (
         <Flex direction="column" borderTop={index === 0 ? "none" : "lightgrey solid 0.1px "} >
             <Box>
@@ -26,15 +29,15 @@ function DepartureItem({ departure, index }: { departure: Hafas_Departures.Depar
     )
 
     return (
-        <AccordionItem >
-            <Flex direction="column" borderTop={index === 0 ? "none" : "lightgrey solid 0.1px"}>
+        <AccordionItem rounded="lg" borderWidth="1px" borderColor={useColorModeValue("gray.200","gray.700")}  m="2">
+            <Flex direction="column" >
                 <AccordionButton>
-                    <Box w="100%">
+                    <Box w="100%" >
 
                         <Flex justify={"space-between"} p="0" m="0" >
 
                             <Flex align="center">
-                                {platform && <Box border="solid 1px" bgColor="blue.700" color="white" px="1" rounded="md" mr="1" whiteSpace={"nowrap"}>{platform}</Box>}
+                                {platform && <Box border="solid 1px" bgColor="blue.700" color={prime} px="1" rounded="md" mr="1" whiteSpace={"nowrap"}>{platform}</Box>}
                                 <Heading size="sm">{line.name || "LineName"}</Heading>
                             </Flex>
                             <Flex align={"center"} justifyContent="end"  >

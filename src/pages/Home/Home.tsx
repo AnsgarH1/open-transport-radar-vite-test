@@ -1,9 +1,16 @@
-import { Heading, Text, Container, Grid, GridItem } from '@chakra-ui/react'
+import { Heading, Text, Container, Grid, GridItem, useColorModeValue } from '@chakra-ui/react'
 
 import { Layout } from '../../components'
 import DepartureBoard from '../../components/DepartureBoard/DepartureBoard'
+import "./Home.css";
+
+
 
 function Home() {
+
+    const prime = useColorModeValue("primary", "secondary")
+    const sec = useColorModeValue("secondary", "primary")
+
     return (
         <Layout>
 
@@ -16,11 +23,11 @@ function Home() {
                 templateRows={{ "base": "2rem 1fr", "md": "4rem 1fr" }}
 
             >
-                <GridItem bg="gray.100" colSpan={{ "base": 1, "md": 3 }}  >
+                <GridItem  rounded="lg" boxShadow='lg' colSpan={{ "base": 1, "md": 3 }}  >
                     Suchleiste
                 </GridItem>
-                <GridItem h="100%" w="100%" overflowY="scroll" colSpan={{ "base": 1, "md": 1 }}><DepartureBoard /></GridItem>
-                <GridItem bg="green.500" h="100%" colSpan={{ "base": 1, "md": 2 }} >Radar</GridItem>
+                <GridItem className="overflow" h="100%" w="100%" bg={sec} rounded="lg" boxShadow='lg' overflowY="scroll" colSpan={{ "base": 1, "md": 1 }}><DepartureBoard /></GridItem>
+                <GridItem bg="green.500" h="100%" rounded="lg" boxShadow='lg' colSpan={{ "base": 1, "md": 2 }} >Radar</GridItem>
             </Grid>
 
         </Layout>
