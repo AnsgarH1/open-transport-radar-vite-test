@@ -68,7 +68,7 @@ function Feedback() {
           classNames="thankyou-message"
           unmountOnExit
         >
-          <Heading as='h2' size='2xl'>Vielen Dank für dein Feedback!</Heading>
+          <Heading as='h2' size={["sm", "md", "xl", "2xl"]}>Vielen Dank für dein Feedback!</Heading>
         </CSSTransition>   
         
         <CSSTransition
