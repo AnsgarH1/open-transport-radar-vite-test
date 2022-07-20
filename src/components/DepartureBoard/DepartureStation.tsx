@@ -1,5 +1,5 @@
 import { ChevronDownIcon, ChevronUpIcon, RepeatIcon } from "@chakra-ui/icons";
-import { Accordion, Box, Button, Flex, Heading, Icon, IconButton, Skeleton, Spinner, Text } from "@chakra-ui/react";
+import { Accordion, Box, Button, Flex, Heading, Icon, IconButton, Skeleton, Spinner, Text, useColorModeValue } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { FaBus, FaLocationArrow } from "react-icons/fa";
 import ProductIcon from "../ProductIcon/ProductIcon";
@@ -13,12 +13,15 @@ function DepartureStation({ station, index }: { station: Hafas_Stations.Station,
 
   const { departures, isLoading, loadDepartures, toggleShowAll, showAll, showAllButtonRef, showMoreAvailable } = useDepartures(id);
 
+  const prime = useColorModeValue("primary", "secondary")
+  const sec = useColorModeValue("secondary", "primary")
+
   return (
-    <Box key={station.id + index} rounded="md" bgColor="white" my="1" flex="1" alignItems={"center"}>
+    <Box key={station.id + index} rounded="lg" p="2" m="2" bgColor={prime} boxShadow="inner" my="2" flex="1" alignItems={"center"}>
 
       {/**Haltestellen Überschrift */}
 
-      <Flex align="center" justify="space-between" bgColor="#6c7b94" color="gray.100" px="2" rounded="6">
+      <Flex align="center" justify="space-between" bgColor={sec} rounded="lg" boxShadow="lg" color={prime} px="2" >
         <Box>
           <Flex align="center">
             <ProductIcon product={products} />
@@ -29,7 +32,7 @@ function DepartureStation({ station, index }: { station: Hafas_Stations.Station,
             <Text>{distance}m </Text>
           </Flex>
         </Box>
-        <IconButton aria-label="refresh" icon={<RepeatIcon color={"white"} />} size="md" variant="ghost" onClick={loadDepartures} />
+        <IconButton aria-label="refresh" icon={<RepeatIcon color={prime} />} size="md" variant="ghost" onClick={loadDepartures} />
       </Flex>
 
       {/** Abfahrten */}

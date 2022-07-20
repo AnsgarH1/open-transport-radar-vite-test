@@ -1,7 +1,8 @@
 .stationIndicator {
   height: 50px;
   width: 45px;
-  position: relative;
+  position:relative;
+
 }
 
 .stationDot {
