@@ -31,7 +31,7 @@ function Home() {
                     templateRows={{ "base": "30px 2fr 1fr", "md": "4rem 1fr" }}
 
                 >
-                    <GridItem bg="white" mt="2" rounded="lg" boxShadow='lg' colSpan={{ "base": 1, "md": 3 }} w="1fr" >
+                    <GridItem bg="tertiary" mt="2" rounded="lg" boxShadow='lg' colSpan={{ "base": 1, "md": 3 }} w="1fr" >
                         Suchleiste
                     </GridItem>
                     <GridItem className="overflow" h="auto" w="100%" bg={sec} rounded="lg" boxShadow='lg' overflowY="scroll" colSpan={{ "base": 1, "md": 1 }}>
