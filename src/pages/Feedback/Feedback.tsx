@@ -36,8 +36,9 @@ function Feedback() {
     text: ''
   }
 
-  const prime = useColorModeValue("primary", "secondary")
-  const sec = useColorModeValue("secondary", "primary")
+  const standard = useColorModeValue("light", "dark")
+  const btn = useColorModeValue("brand.sec", "brand.sec")
+
 
   const ValidationSchema = Yup.object().shape({
     firstname: Yup.string()
@@ -62,7 +63,7 @@ function Feedback() {
 
   return (
     <Layout>
-      <Flex bg={useColorModeValue("tertiary", "quartiary")} align="center" justify="center" h="100vh">
+      <Flex bg={useColorModeValue("white", "gray.900")} align="center" justify="center" h="100vh">
 
         <CSSTransition
           in={showMessage}
@@ -83,7 +84,7 @@ function Feedback() {
         >
           <Box
             w={["full", 'md']}
-            bg={prime}
+            bg={standard}
             p={[9, 10]}
             mt={[20, '10vh']}
             mx='3'
@@ -161,8 +162,8 @@ function Feedback() {
                       <Button
                         w={['full', 'auto']}
                         alignSelf='right'
-                        bgColor={sec}
-                        color={prime}
+                        bgColor={btn}
+                        color="light"
                         boxShadow="lg"
                         size='md'
                         type="submit"

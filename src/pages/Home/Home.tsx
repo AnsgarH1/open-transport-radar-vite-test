@@ -15,7 +15,10 @@ import "./Home.css";
 function Home() {
 
     const prime = useColorModeValue("primary", "secondary")
-    const sec = useColorModeValue("secondary", "primary")
+    const btn = useColorModeValue("brand.sec", "brand.sec")
+    const brand = useColorModeValue("brand.prim", "brand.dark") //Departure Board Background
+    const searchbarCol = useColorModeValue("brand.tert", "gray.900") //Departure Board Background
+    const mapCol = useColorModeValue("light", "dark")
 
     const { onToggle, isOpen } = useDisclosure()
     return (
@@ -31,17 +34,17 @@ function Home() {
                     templateRows={{ "base": "30px 2fr 1fr", "md": "4rem 1fr" }}
 
                 >
-                    <GridItem bg="tertiary" mt="2" rounded="lg" boxShadow='lg' colSpan={{ "base": 1, "md": 3 }} w="1fr" >
+                    <GridItem bg={searchbarCol} mt="2" rounded="lg" boxShadow='lg' colSpan={{ "base": 1, "md": 3 }} w="1fr" >
                         Suchleiste
                     </GridItem>
-                    <GridItem className="overflow" h="auto" w="100%" bg={sec} rounded="lg" boxShadow='lg' overflowY="scroll" colSpan={{ "base": 1, "md": 1 }}>
+                    <GridItem className="overflow" h="auto" w="100%" bg={brand} rounded="lg" boxShadow='lg' overflowY="scroll" colSpan={{ "base": 1, "md": 1 }}>
                         <DepartureBoard />
                     </GridItem>
-                    <GridItem rounded="lg" boxShadow='lg' colSpan={{ "base": 1, "md": 2 }} >
+                    <GridItem rounded="lg" bg={mapCol} boxShadow='lg' colSpan={{ "base": 1, "md": 2 }} >
 
 
                         {isOpen ?
-                            <Map /> : <Button w="full" color={sec} onClick={onToggle} >öffne Karte</Button>}
+                            <Map /> : <Button w="full" bg={btn} color="light" onClick={onToggle} >Öffne Karte</Button>}
 
                     </GridItem>
 
