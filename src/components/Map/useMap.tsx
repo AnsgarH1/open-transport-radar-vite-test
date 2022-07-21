@@ -16,115 +16,98 @@ interface MapboxMapProps {
     onRemoved?(): void;
 }
 
-
+/**
+ * THIS FUNCTION NEEDS SOME WORK, VERY FRAGILE BEHAVIOUR
+ * SO MANY RE-RENDERS, BECAUSE OF RADAR
+ * @returns 
+ */
 const useMap = () => {
-    console.log("useMap")
+    console.log("useMap rendered")
     const [map, setMap] = useState<mapboxgl.Map>();
     const [isLoadingMap, setLoadingMap] = useState(false)
     const { currentLocation, locationError, browserSupported, isLoadingLocation } = useContext(LocationContext)
     const { radar, isLoadingRadar, loadRadar } = useRadar();
-    //const { tick } = useInterval(placeVehiclesOnMap, 2000);
-    const { set, reset, clear} = useTimeout(initMap, 2000);
+    // const { set, reset, clear} = useTimeout(initMap, 2000);
     const [touched, setTouched] = useState(false)
-    const [isRunning, setIsRunning] = useState(true);
     const [lng, setLng] = useState(13.404955)
     const [lat, setLat] = useState(52.520007)
-    const [updateSource, setUpdateSource] = useState(0);
     const [zoom, setZoom] = useState(16);
     const mapContainer = useRef(null);
 
 
     useEffect(() => {
-        console.log("isLoadingLocation;", isLoadingLocation)
-        const m = initMap() //initialize map
-      
-        addUserLayer();
+        if (map) return; //init map only once
+        initMap() //initialize map
+    }), [isLoadingLocation];
 
-    }), [isLoadingLocation, currentLocation];
-
+    //sets position of the map if there is a map
     useEffect(() => {
-        if(!map) return;
+        if (!map) return; //only enters when map is initialized
         setMapPosition()
     }), [isLoadingMap];
 
     //adds vehicles on map
     useEffect(() => {
-        updateRadar();
         const updateSource = setInterval(async () => {
-            placeVehiclesOnMap()
+            loadVehicles()
+            addUserOnMap();
         }, 2000);
-
         return (() => {
-            console.log("radar cleared", lng, lat)
             if (updateSource) { clearInterval(updateSource); }
         })
     }), [lng, lat];
 
+
+    /**
+     * 
+     * @returns 
+     */
     const setMapPosition = () => {
         if (!map) return; //waiting for map to be initialized
 
-        if (!currentLocation) {
-            console.log(`useMap.useEffect: ${locationError?.message}  ${currentLocation}`);
+        if (!currentLocation) { //if no current location is found return
+            console.log(`useMap.setMapPosition: ${locationError?.message}  ${currentLocation}`);
             return;
         }
-        //addUserLocationLayer()
-        //setLoadingMap(false)
-
-        //set lng and lat to current user location
-        // console.log("setze lng und lat");
-
+        //set lng and lat to current positon
         setLng(currentLocation.coords.longitude);
         setLat(currentLocation.coords.latitude);
 
+        //if map is touch don't center anymore
         if (!touched) {
-            map.easeTo({ center: [lng, lat] })        
+            map.easeTo({ center: [lng, lat] })
         }
-        addUserLayer();
+        addUserOnMap();
     }
 
-    const updateRadar = () => {
-        console.log("isLoadingRadar:", isLoadingRadar, lng, lat)
-        addUserLayer();
 
-        // tick();
-        // const updateSource = setInterval(async () => {
-        //     placeVehiclesOnMap()
-        // }, 2000);
-        // setUpdateSource(updateSource);
 
-        // return (() => {
-        //     console.log("radar cleared", lng, lat)
-        //     if (updateSource) { clearInterval(updateSource); }
-        // })
-        // if (isLoadingRadar) return;
-
-        //loadRadar(lng, lat)
-    }
-
-    function initMap () {
-        if (map) return; //init map only one
+    function initMap() {
         setLoadingMap(true)
 
-        if(isLoadingLocation){
-            console.log("returned bc location was loading")
-            return}; //waiting on location to be loaded
+        if (isLoadingLocation) {
+            console.log("returned bc location is loading")
+            return
+        }; //waiting on location to be loaded
 
-        const node = mapContainer.current;
         //ref is not set till after the function returns and the content is rendered
-        
+        const node = mapContainer.current;
+
         if (typeof window === "undefined" || node === null) {
-            // setLoadingMap(false)
+            setLoadingMap(false)
             return;
         }
 
-        // if (!currentLocation) {
-        //     console.log(`#### useMap.initMap: Error: ${locationError?.message}, CL:  ${currentLocation}, Loading:${isLoadingLocation} ####`)
-        //     // setLoadingMap(false)
-        //     return
-        // }
+        if (!currentLocation) {
+            console.log(`useMap.initMap: Error: ${locationError?.message}, CL:  ${currentLocation}, Loading:${isLoadingLocation} ####`)
+            setLoadingMap(false)
+            return
+        }
+
         // setLng(currentLocation.coords.longitude);
         // setLat(currentLocation.coords.latitude);
 
+        //init new mapbox map
         const mapboxMap = new mapboxgl.Map({
             container: node,
             accessToken: 'pk.eyJ1IjoidGltb3RoeWlzYWFjIiwiYSI6ImNsNHNiOGNkajAxMnAzam16aDJ4Mnh3ZnAifQ.TjhXY87DUEZ9w_fqVXOfDw', //process.env.NEXT_PUBLIC_MAPBOX_TOKEN,
@@ -132,7 +115,6 @@ const useMap = () => {
             center: [lng, lat],
             zoom: zoom,
         });
-        console.log("new Map")
 
         // mapboxMap.on('move', () => {
         //     // setTouched(true);
@@ -142,6 +124,8 @@ const useMap = () => {
         // })
 
         const nav = new mapboxgl.NavigationControl()
+
+        // //geolocation control from mapbox, wanted to implement own code though
         // const ctrl = new mapboxgl.GeolocateControl({
         //     positionOptions: {
         //         enableHighAccuracy: true
@@ -150,9 +134,10 @@ const useMap = () => {
         //     showUserHeading: true
         // })
 
-       //mapboxMap.addControl(ctrl)
+        //mapboxMap.addControl(ctrl)
         mapboxMap.addControl(nav)
-        // ctrl.trigger();
+
+        // // triggers geolocation control so you don't have to activate in manually
         // mapboxMap.on('load', () => {
         //     // ctrl.trigger();
         //     setLoadingMap(false)
@@ -164,52 +149,54 @@ const useMap = () => {
         return mapboxMap;
     }
 
-    // /**
-    //  * 
-    //  * @param vehicle 
-    //  * @returns GeoJSON with coordinates from a vehicle
-    //  */
-    // function getGeoJSONFromVehicle(vehicle: Hafas_Radar.Radar): FeatureCollection<Geometry, GeoJsonProperties> | undefined {
-    //     if (!vehicle) {
-    //         console.log("useMap.getLocation: No Vehicle (Radar) found")
-    //         return;
-    //     }
-    //     const ln = vehicle.location.longitude
-    //     const la = vehicle.location.latitude
-    //     const title = vehicle.tripId.toString()
-
-    //     return convertToGeoJSON(ln, la, title)
-    // }
-
-    function placeVehiclesOnMap() {
-        console.log("radar:", radar)
+    /**
+     * 
+     */
+    function loadVehicles() {
         if (radar && !isLoadingRadar) {
             loadRadar(lat, lng)
-            addVehicleLayer(radar)
+            addVehicleOnMap(radar)
         }
     }
 
-    function addVehicleLayer(radar: Hafas_Radar.Radar[]) {
-
+    /**
+     * places Vehicles on Map
+     * @param radar 
+     * 
+     * @returns 
+     */
+    function addVehicleOnMap(radar: Hafas_Radar.Radar[]) {
         if (!radar || !map) return;
-
         //iterate through all found vehicles 
         radar.forEach((e) => {
             const ln = e.location.longitude
             const lt = e.location.latitude
             const title = e.tripId.toString()
-            addObjectOnMap(ln, lt, title, "red")     
+            addObjectOnMap(ln, lt, title, "red")
         })
     }
 
-    function addUserLayer() {
+    /**
+     * Adds a layer for the user 
+     * @returns 
+     */
+    function addUserOnMap() {
         if (!map || !map.isStyleLoaded()) return;
         const title = "user"
         addObjectOnMap(lng, lat, title, "blue");
     }
 
-    function addObjectOnMap(ln:number, lt:number, title:string, color:string){
-        if(!map) return;
+    /**
+     * Adds source and visible layer on map
+     * maybe change color to img in future
+     * @param ln longitude
+     * @param lt latitude
+     * @param title name of object
+     * @param color color of object
+     * @returns 
+     */
+    function addObjectOnMap(ln: number, lt: number, title: string, color: string) {
+        if (!map) return;
         const geojson = convertToGeoJSON(ln, lt, title)
         if (map.getSource(title)) { //if user was already added just update the position                    
             const source = map.getSource(title) as mapboxgl.GeoJSONSource
@@ -231,10 +218,16 @@ const useMap = () => {
                     'circle-stroke-color': 'white'
                 }
             });
+
+            /*
+             * here comes what happen when you click on a object
+             * for test purpose, it centers on object right now
+             * different & useful logic should be added
+             */
             map.on('click', title, (v) => {
 
                 //if user got click keep user in focus
-                title == "user" ? setTouched(false): setTouched(true);
+                title == "user" ? setTouched(false) : setTouched(true);
 
                 if (!v || !v.features) return;
                 map.flyTo({
@@ -242,16 +235,25 @@ const useMap = () => {
                 });
 
             });
+
+            // change to pointer when hover over object
             map.on('mouseenter', title, () => {
                 map.getCanvas().style.cursor = 'pointer';
             });
-            // Change it back to a pointer when it leaves.
+            // change it back to a pointer when it leaves.
             map.on('mouseleave', title, () => {
                 map.getCanvas().style.cursor = '';
             });
         }
     }
 
+    /**
+     * Takes coordinates and name and returns GeoJSON
+     * @param lng 
+     * @param lat 
+     * @param title 
+     * @returns geojson: FeatureCollection<Geometry, GeoJsonProperties> | undefined 
+     */
     function convertToGeoJSON(lng: number, lat: number, title: string): FeatureCollection<Geometry, GeoJsonProperties> | undefined {
         return {
             'type': 'FeatureCollection',
@@ -268,7 +270,8 @@ const useMap = () => {
                 }
             ]
         }
-    }    
+    }
+
 
     const cleanup = () => {
         if (map) map.remove()
@@ -277,7 +280,6 @@ const useMap = () => {
     return {
         isLoadingMap,
         initMap,
-        placeVehiclesOnMap,
         map,
         mapContainer,
     }
