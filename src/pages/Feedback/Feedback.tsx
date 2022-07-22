@@ -43,7 +43,7 @@ function Feedback() {
           classNames="thankyou-message"
           unmountOnExit
         >
-          <Heading as='h2' size={["md", "xl", "2xl"]}>Vielen Dank für dein Feedback!</Heading>
+          <Heading as='h2' data-testid='response-message' size={["md", "xl", "2xl"]}>Vielen Dank für dein Feedback!</Heading>
         </CSSTransition>
 
         <CSSTransition
@@ -75,7 +75,7 @@ function Feedback() {
 
               {({ errors, touched }) => (
 
-                <Form>
+                <Form data-testid="feedback-form">
                   <VStack spacing={[2,4]} align='flex-start' w='full' h="auto">
 
                     <FormControl isRequired>
@@ -116,9 +116,9 @@ function Feedback() {
                       <FormLabel htmlFor='issue'>Anliegen</FormLabel>
                       <Field as={Select} id='issue' name='issue'>
                         <option disabled selected>Was ist dein Anliegen?</option>
-                        <option>Es fehlen Verkerhrslinien bei mir</option>
-                        <option>Die ÖPNV Daten stimmen nicht</option>
-                        <option>Keine Ahnung tbh</option>
+                        <option value="opt-1">Es fehlen Verkerhrslinien bei mir</option>
+                        <option value="opt-2">Die ÖPNV Daten stimmen nicht</option>
+                        <option value="opt-3">Keine Ahnung tbh</option>
                       </Field>
                       {errors.issue && touched.issue && <FormHelperText>{errors.issue}</FormHelperText>}
                     </FormControl>
@@ -135,6 +135,7 @@ function Feedback() {
                     </FormControl>
 
                     <Button
+                      data-testid='submit-btn'
                       w={['full', 'auto']}
                       alignSelf='right'
                       bgColor={sec}

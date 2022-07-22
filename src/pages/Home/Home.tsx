@@ -42,7 +42,10 @@ function Home() {
 
 
                         {isOpen ?
-                            <Map data-testid={"map"}/> : <Button w="full" color={sec} onClick={onToggle} >öffne Karte</Button>}
+                            <Map />
+                            : <Button data-testid={"map-button"} w="full" color={sec} onClick={onToggle} >
+                                öffne Karte
+                            </Button>}
 
                     </GridItem>
 
