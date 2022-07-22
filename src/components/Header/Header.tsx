@@ -1,5 +1,4 @@
-import React from 'react'
-import { Box, Button, Center, Flex, Heading, useColorMode, Avatar, HStack, IconButton, useDisclosure, Menu, MenuButton, MenuItem, MenuDivider, MenuList, Stack, useColorModeValue } from "@chakra-ui/react";
+import { Box, Center, Flex, Heading, useColorMode, Avatar, IconButton, useDisclosure, Menu, MenuButton, MenuItem, MenuDivider, MenuList, Stack, useColorModeValue } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import { CloseIcon, HamburgerIcon, MoonIcon, QuestionOutlineIcon, SettingsIcon, SunIcon } from '@chakra-ui/icons';
 

@@ -1,4 +1,4 @@
-declare module Hafas_Stations{
+declare namespace Hafas_Stations{
 
   export interface Station {
     type:     string;

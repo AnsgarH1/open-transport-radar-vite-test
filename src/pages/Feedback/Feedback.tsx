@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useState } from 'react';
 import {
-  Button, FormControl, FormLabel, FormErrorMessage,
-  FormHelperText, Heading, Input, Textarea, Select, VStack, Flex, Box, useColorModeValue
+  Button, FormControl, FormLabel,
+  Heading, Input, Textarea, Select, VStack, Flex, Box, useColorModeValue
 } from '@chakra-ui/react'
 import Layout from '../../components/Layout/Layout';
-import { Field, Form, Formik, FormikProps } from "formik";
+import { Field, Form, Formik } from "formik";
 import { CSSTransition } from 'react-transition-group';
 import { ValidationSchema } from './ValidationSchema';
 import { IFormInputs } from './IFormInputs';
@@ -14,10 +13,6 @@ import S from "./Feedback.module.css";
 
 
 function Feedback() {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<IFormInputs>(); // initialise the hook
-  const formSubmitHandler: SubmitHandler<IFormInputs> = (data: IFormInputs) => {
-    console.log(data);
-  };
 
   const [showForm, setShowForm] = useState(true);
   const [showMessage, setShowMessage] = useState(false)
@@ -77,7 +72,7 @@ function Feedback() {
               {({ errors, touched }) => (
 
                 <Form data-testid="feedback-form">
-                  <VStack spacing={[2,4]} align={['flex-start', 'center']} w='full'>
+                  <VStack spacing={[2, 4]} align={['flex-start', 'center']} w='full'>
 
                     <FormControl isRequired>
                       <FormLabel htmlFor='firstname'>Vorname</FormLabel>

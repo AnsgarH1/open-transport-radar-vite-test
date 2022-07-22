@@ -1,4 +1,4 @@
-import { AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Flex, Heading, Icon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Spinner, Text, useBoolean, useColorModeValue, useDisclosure } from '@chakra-ui/react'
+import { AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Flex, Heading, Icon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Text, useColorModeValue, useDisclosure } from '@chakra-ui/react'
 import { FcCancel } from "react-icons/fc"
 
 import { useDepartureTime } from './departureHooks/useDepartureTime'
@@ -9,12 +9,11 @@ import TripView from '../TripView/TripView'
 function DepartureItem({ departure, index }: { departure: Hafas_Departures.Departure, index: number }) {
 
     const { line, platform, destination, cancelled, when, plannedWhen, remarks, direction, tripId } = departure
-    const { displayDepartureTime, delayed, delay } = useDepartureTime(when, plannedWhen)
+    const { displayDepartureTime, delay } = useDepartureTime(when, plannedWhen)
     const { isOpen, onOpen, onClose } = useDisclosure()
     const { trip, isLoading, loadTrip } = useTrip(tripId, line.name || line.fahrtNr)
 
     const standard = useColorModeValue("light", "dark")
-    const brand = useColorModeValue("brand.med", "brand.dark")
     const sign = useColorModeValue("brand.dark", "brand.sec")
 
     if (cancelled) return (

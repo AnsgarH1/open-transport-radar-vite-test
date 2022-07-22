@@ -1,7 +1,6 @@
 import { ChevronDownIcon, ChevronUpIcon, RepeatIcon } from "@chakra-ui/icons";
-import { Accordion, Box, Button, Flex, Heading, Icon, IconButton, Skeleton, Spinner, Text, useColorModeValue } from "@chakra-ui/react";
-import { useEffect } from "react";
-import { FaBus, FaLocationArrow } from "react-icons/fa";
+import { Accordion, Box, Button, Flex, Heading, Icon, IconButton, Skeleton, Text, useColorModeValue } from "@chakra-ui/react";
+import { FaLocationArrow } from "react-icons/fa";
 import ProductIcon from "../ProductIcon/ProductIcon";
 import DepartureItem from "./DepartureItem";
 import useDepartures from "./departureHooks/useDepartures";
@@ -9,13 +8,12 @@ import useDepartures from "./departureHooks/useDepartures";
 
 
 function DepartureStation({ station, index }: { station: Hafas_Stations.Station, index: number }) {
-  const { name, distance, products, id, type } = station;
+  const { name, distance, products, id } = station;
 
   const { departures, isLoading, loadDepartures, toggleShowAll, showAll, showAllButtonRef, showMoreAvailable } = useDepartures(id);
 
   const prime = useColorModeValue("white", "dark")
   const brand = useColorModeValue("brand.prim", "brand.dark")
-  const btnCol = useColorModeValue("brand.tert", "brand.tert")
 
 
   return (
@@ -42,7 +40,7 @@ function DepartureStation({ station, index }: { station: Hafas_Stations.Station,
       {isLoading ? (
         <Box m="1">
           <Flex w="100%">
-            <Skeleton h="1.3rem" w="1rem" mr="1" color={"blue.300"}/>
+            <Skeleton h="1.3rem" w="1rem" mr="1" color={"blue.300"} />
             <Skeleton h="1.3rem" w="full" />
           </Flex>
           <Skeleton h="2rem" w="full" mt="1" />

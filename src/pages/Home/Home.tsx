@@ -1,4 +1,4 @@
-import { Box, Button, Grid, GridItem, Heading, Input, useColorModeValue, useDisclosure } from '@chakra-ui/react'
+import { Button, Grid, GridItem, useColorModeValue, useDisclosure } from '@chakra-ui/react'
 
 import { Layout } from '../../components'
 import Map from '../../components/Map/Map'
@@ -12,10 +12,8 @@ import S from "./Home.module.css";
 
 function Home() {
 
-    const prime = useColorModeValue("primary", "secondary")
     const btn = useColorModeValue("brand.sec", "brand.sec")
     const brand = useColorModeValue("brand.prim", "brand.dark") //Departure Board Background
-    const searchbarCol = useColorModeValue("brand.dark", "brand.prim") //Departure Board Background
     const mapCol = useColorModeValue("light", "dark")
     
     const { onToggle, isOpen } = useDisclosure()
