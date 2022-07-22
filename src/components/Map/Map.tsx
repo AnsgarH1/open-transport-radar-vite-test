@@ -16,7 +16,7 @@ function Map() {
     return (
         isLoadingMap
             ? <Skeleton style={{ width: "100%", height: "100%" }} />
-            : (<div ref={mapContainer} style={{ width: "100%", height: "100%" }} />)
+            : (<div data-testid={"map"} ref={mapContainer} style={{ width: "100%", height: "100%" }} />)
     )
 }
 

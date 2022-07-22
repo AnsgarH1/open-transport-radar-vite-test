@@ -45,14 +45,14 @@ function Header() {
                         </IconButton>
                     </Box>
                     <Menu>
-                        <MenuButton>
+                        <MenuButton data-testid={"avatar-btn"}>
                             <Avatar />
                         </MenuButton>
                         <MenuList>
 
                             <MenuItem icon={<SettingsIcon />}>Settings</MenuItem>
                             <MenuItem icon={<QuestionOutlineIcon />}>Help</MenuItem>
-                            <NavLink to={"/feedback"}><MenuItem>Contact</MenuItem></NavLink>
+                            <NavLink to={"/feedback"} ><MenuItem data-testid={"feedback-link"}>Contact</MenuItem></NavLink>
                             <MenuDivider />
                             <MenuItem color="red">Log Out</MenuItem>
                         </MenuList>

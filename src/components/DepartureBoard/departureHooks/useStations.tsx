@@ -36,13 +36,14 @@ const useStations = () => {
             }).finally(() => setLoadingStations(false))
     }
 
-
+    const [initialized, setInitialized] = useState(false)
 
     useEffect(() => {
-        if (currentLocation) {
+        if (currentLocation && !initialized) {
             loadStations(currentLocation.coords.latitude, currentLocation.coords.longitude)
+            setInitialized(true)
         }
-    }, [currentLocation])
+    }, [currentLocation,])
 
     return {
         nearbyStations: nearbyStations || undefined,

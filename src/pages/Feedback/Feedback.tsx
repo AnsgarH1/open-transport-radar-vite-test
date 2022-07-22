@@ -7,18 +7,11 @@ import {
 import Layout from '../../components/Layout/Layout';
 import { Field, Form, Formik, FormikProps } from "formik";
 import { CSSTransition } from 'react-transition-group';
-import * as Yup from 'yup';
+import { ValidationSchema } from './ValidationSchema';
+import { IFormInputs } from './IFormInputs';
 import "./Feedback.css";
 import S from "./Feedback.module.css";
 
-
-interface IFormInputs {
-  firstname: string,
-  lastname: string,
-  email: string,
-  issue: string
-  text: string
-}
 
 function Feedback() {
   const { register, handleSubmit, watch, formState: { errors } } = useForm<IFormInputs>(); // initialise the hook
@@ -42,29 +35,10 @@ function Feedback() {
   const formCol = useColorModeValue("white", "gray.900")
 
 
-  const ValidationSchema = Yup.object().shape({
-    firstname: Yup.string()
-      .min(2, 'Vorname zu kurz!')
-      .max(50, 'VorName zu lang!')
-      .required('Vorname wird benötigt'),
-    lastname: Yup.string()
-      .min(2, 'Nachname zu kurz!')
-      .max(50, 'Nachname zu lang!')
-      .required('Nachname wird benötigt'),
-    email: Yup.string()
-      .email('Ungültige email')
-      .required('E-Mail wird benötigt'),
-    issue: Yup.string()
-      .ensure(),
-    text: Yup.string()
-      .min(2, 'Bitte mindestens 2 Zeichen verwenden.')
-      .max(500, 'Bitte maximal 500 Zeichen verwenden.')
-      .required('Bitte schreibe hier dein Feedback'),
-  });
-
   return (
     <Layout>
       <Flex bg={standard} align="center" justify="center" h="100vh">
+
 
         <CSSTransition
           in={showMessage}
@@ -72,7 +46,7 @@ function Feedback() {
           classNames={`${S.thankyouMessage}`}
           unmountOnExit
         >
-          <Heading as='h2' size={["md", "xl", "2xl"]}>Vielen Dank für dein Feedback!</Heading>
+          <Heading as='h2' data-testid='response-message' size={["md", "xl", "2xl"]}>Vielen Dank für dein Feedback!</Heading>
         </CSSTransition>
 
         <CSSTransition
@@ -91,6 +65,7 @@ function Feedback() {
             mx='3'
             boxShadow="xl"
             rounded="lg"
+          // overflowY="scroll"
           >
             <Heading as='h2' size={["lg", "xl"]}>Kontaktformular</Heading><br />
             <Formik
@@ -101,63 +76,63 @@ function Feedback() {
 
               {({ errors, touched }) => (
 
-                <Form>
-                    <VStack spacing={4} align={['flex-start', 'center']} w='full'>
+                <Form data-testid="feedback-form">
+                  <VStack spacing={4} align={['flex-start', 'center']} w='full'>
 
-                      <FormControl isRequired>
-                        <FormLabel htmlFor='firstname'>Vorname</FormLabel>
-                        <Field
-                          as={Input}
-                          id='firstname'
-                          placeholder='Vorname'
-                          name='firstname'
-                        />
-                        {errors.firstname && touched.firstname && <span className={S.error}>{errors.firstname}</span>}
-                      </FormControl>
-
-
-                      <FormControl isRequired >
-                        <FormLabel htmlFor='lastname'>Nachname</FormLabel>
-                        <Field
-                          as={Input}
-                          id='lastname'
-                          name='lastname'
-                          placeholder='Nachname'
-                        />
-                        {errors.lastname && touched.lastname && <span className={S.error}>{errors.lastname}</span>}
-                      </FormControl>
-
-                      <FormControl isRequired>
-                        <FormLabel htmlFor='email'>Email</FormLabel>
-                        <Field as={Input}
-                          id='email'
-                          name='email'
-                          type='email'
-                        />
-                        {errors.email && touched.email && <span className={S.error}>{errors.email}</span>}
-                      </FormControl>
+                    <FormControl isRequired>
+                      <FormLabel htmlFor='firstname'>Vorname</FormLabel>
+                      <Field
+                        as={Input}
+                        id='firstname'
+                        placeholder='Vorname'
+                        name='firstname'
+                      />
+                      {errors.firstname && touched.firstname && <span className={S.error}>{errors.firstname}</span>}
+                    </FormControl>
 
 
-                      <FormControl>
-                        <FormLabel htmlFor='issue'>Anliegen</FormLabel>
-                        <Field as={Select} id='issue' name='issue'>
-                          {/* <option disabled selected>Was ist dein Anliegen?</option> */}
-                          <option>Es fehlen Verkerhrslinien bei mir</option>
-                          <option>Die ÖPNV Daten stimmen nicht</option>
-                          <option>Keine Ahnung tbh</option>
-                        </Field>
-                        {errors.issue && <span className={S.error}>{errors.issue}</span>}
-                      </FormControl>
+                    <FormControl isRequired >
+                      <FormLabel htmlFor='lastname'>Nachname</FormLabel>
+                      <Field
+                        as={Input}
+                        id='lastname'
+                        name='lastname'
+                        placeholder='Nachname'
+                      />
+                      {errors.lastname && touched.lastname && <span className={S.error}>{errors.lastname}</span>}
+                    </FormControl>
 
-                      <FormControl>
-                        <Field as={Textarea}
-                          name='text'
-                          id='text'
-                          placeholder='Schreibe uns dein Feedback'
-                          size='md'
-                        />
-                        {errors.text && touched.text && <span className={S.error}>{errors.text}</span>}
-                      </FormControl>
+                    <FormControl isRequired>
+                      <FormLabel htmlFor='email'>Email</FormLabel>
+                      <Field as={Input}
+                        id='email'
+                        name='email'
+                        type='email'
+                      />
+                      {errors.email && touched.email && <span className={S.error}>{errors.email}</span>}
+                    </FormControl>
+
+
+                    <FormControl>
+                      <FormLabel htmlFor='issue'>Anliegen</FormLabel>
+                      <Field as={Select} id='issue' name='issue'>
+                        {/* <option disabled selected>Was ist dein Anliegen?</option> */}
+                        <option value="opt-1">Es fehlen Verkerhrslinien bei mir</option>
+                        <option value="opt-2">Die ÖPNV Daten stimmen nicht</option>
+                        <option value="opt-3">Keine Ahnung tbh</option>
+                      </Field>
+                      {errors.issue && <span className={S.error}>{errors.issue}</span>}
+                    </FormControl>
+
+                    <FormControl>
+                      <Field as={Textarea}
+                        name='text'
+                        id='text'
+                        placeholder='Schreibe uns dein Feedback'
+                        size='md'
+                      />
+                      {errors.text && touched.text && <span className={S.error}>{errors.text}</span>}
+
 
                       <Button
                         w={['full', 'auto']}
@@ -165,18 +140,31 @@ function Feedback() {
                         color="light"
                         boxShadow="lg"
                         size='md'
-                        type="submit"
-                      >
-                        Senden
-                      </Button>
-                    </VStack>
+                      />
+                      {errors.text && touched.text && <FormHelperText>{errors.text}</FormHelperText>}
+
+                    </FormControl>
+
+                    <Button
+                      data-testid='submit-btn'
+                      w={['full', 'auto']}
+                      alignSelf='right'
+                      bgColor={btn}
+                      color='light'
+                      boxShadow="lg"
+                      size={['md', 'lg']}
+                      type="submit"
+                    >
+                      Senden
+                    </Button>
+                  </VStack>
                 </Form>
               )}
             </Formik>
           </Box>
         </CSSTransition>
       </Flex>
-    </Layout>
+    </Layout >
   );
 }
 

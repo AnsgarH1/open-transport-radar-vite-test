@@ -28,3 +28,14 @@
     transition-property: transform, opacity;
 }
 .contact-form-exit-done { opacity: 1}
+
+
+.formBox {
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll; 
+  }
+  
+.formBox::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+  }
