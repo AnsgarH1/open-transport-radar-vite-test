@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useContext } from 'react';
 import mapboxgl from 'mapbox-gl';
 import "mapbox-gl/dist/mapbox-gl.css";
-import { Spinner } from '@chakra-ui/react';
+import { Spinner, useColorMode } from '@chakra-ui/react';
 import { LocationContext } from '../../context/LocationContext';
 import { FaCaretRight } from 'react-icons/fa';
 import { GeoJSON, Geometry, GeoJsonProperties, FeatureCollection } from 'geojson';
@@ -30,6 +30,8 @@ const useMap = () => {
     const [touched, setTouched] = useState(false)
     const [zoom, setZoom] = useState(16);
     const mapContainer = useRef(null);
+    const [mapStyle, setMapStyle] = useState() 
+    const { colorMode } = useColorMode();
 
 
     useEffect(() => {
@@ -41,6 +43,7 @@ const useMap = () => {
     useEffect(() => {
         if (!map) return; //only enters when map is initialized
         setMapPosition()
+        // changeMapStyle();
     }), [isLoadingMap];
 
     //adds vehicles on map
@@ -52,7 +55,7 @@ const useMap = () => {
         return (() => {
             if (updateSource) { clearInterval(updateSource); }
         })
-    }), [currentLocation?.coords.longitude, currentLocation?.coords.latitude];
+    }), [];
 
 
     /**
@@ -96,18 +99,19 @@ const useMap = () => {
             return
         }
 
-        // setLng(currentLocation.coords.longitude);
-        // setLat(currentLocation.coords.latitude);
-
+        //color of map depends on colorMode
+        const layer = colorMode === "light" ? "streets-v11" : "dark-v10"
+        
         //init new mapbox map
         const mapboxMap = new mapboxgl.Map({
             container: node,
             accessToken: 'pk.eyJ1IjoidGltb3RoeWlzYWFjIiwiYSI6ImNsNHNiOGNkajAxMnAzam16aDJ4Mnh3ZnAifQ.TjhXY87DUEZ9w_fqVXOfDw', //process.env.NEXT_PUBLIC_MAPBOX_TOKEN,
-            style: "mapbox://styles/mapbox/streets-v11",
+            style: "mapbox://styles/mapbox/" + layer,
             center: [currentLocation.coords.longitude, currentLocation.coords.latitude],
             zoom: zoom,
         });
 
+        
 
 
         const nav = new mapboxgl.NavigationControl()
@@ -243,6 +247,11 @@ const useMap = () => {
         }
     }
 
+    const changeMapStyle = () => {
+        const layer = colorMode === "light" ? "streets-v11" : "dark-v10"
+        if(map) map.setStyle('mapbox://styles/mapbox/' + layer);
+    }
+
 
     const cleanup = () => {
         if (map) map.remove()
@@ -253,6 +262,7 @@ const useMap = () => {
         initMap,
         map,
         mapContainer,
+        changeMapStyle
     }
 }
 
