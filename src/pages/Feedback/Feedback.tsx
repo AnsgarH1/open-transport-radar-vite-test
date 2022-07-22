@@ -9,6 +9,7 @@ import { Field, Form, Formik, FormikProps } from "formik";
 import { CSSTransition } from 'react-transition-group';
 import * as Yup from 'yup';
 import "./Feedback.css";
+import S from "./Feedback.module.css";
 
 
 interface IFormInputs {
@@ -36,8 +37,10 @@ function Feedback() {
     text: ''
   }
 
-  const prime = useColorModeValue("primary", "secondary")
-  const sec = useColorModeValue("secondary", "primary")
+  const standard = useColorModeValue("light", "dark")
+  const btn = useColorModeValue("brand.sec", "brand.sec")
+  const formCol = useColorModeValue("white", "gray.900")
+
 
   const ValidationSchema = Yup.object().shape({
     firstname: Yup.string()
@@ -52,8 +55,7 @@ function Feedback() {
       .email('Ungültige email')
       .required('E-Mail wird benötigt'),
     issue: Yup.string()
-      .ensure()
-      .required("Bitte gebe einen Grund an"),
+      .ensure(),
     text: Yup.string()
       .min(2, 'Bitte mindestens 2 Zeichen verwenden.')
       .max(500, 'Bitte maximal 500 Zeichen verwenden.')
@@ -62,12 +64,12 @@ function Feedback() {
 
   return (
     <Layout>
-      <Flex bg={useColorModeValue("tertiary", "quartiary")} align="center" justify="center" h="100vh">
+      <Flex bg={standard} align="center" justify="center" h="100vh">
 
         <CSSTransition
           in={showMessage}
           timeout={600}
-          classNames="thankyou-message"
+          classNames={`${S.thankyouMessage}`}
           unmountOnExit
         >
           <Heading as='h2' size={["md", "xl", "2xl"]}>Vielen Dank für dein Feedback!</Heading>
@@ -76,18 +78,18 @@ function Feedback() {
         <CSSTransition
           in={showForm}
           timeout={600}
-          classNames={'contact-form'}
+          classNames={`${S.contactForm}`}
           appear
           unmountOnExit
           onExited={() => setShowMessage(true)}
         >
           <Box
             w={["full", 'md']}
-            bg={prime}
+            bg={formCol}
             p={[9, 10]}
             mt={[20, '10vh']}
             mx='3'
-            boxShadow="lg"
+            boxShadow="xl"
             rounded="lg"
           >
             <Heading as='h2' size={["lg", "xl"]}>Kontaktformular</Heading><br />
@@ -110,7 +112,7 @@ function Feedback() {
                           placeholder='Vorname'
                           name='firstname'
                         />
-                        {errors.firstname && touched.firstname && <FormHelperText>{errors.firstname}</FormHelperText>}
+                        {errors.firstname && touched.firstname && <span className={S.error}>{errors.firstname}</span>}
                       </FormControl>
 
 
@@ -122,7 +124,7 @@ function Feedback() {
                           name='lastname'
                           placeholder='Nachname'
                         />
-                        {errors.lastname && touched.lastname && <FormHelperText>{errors.lastname}</FormHelperText>}
+                        {errors.lastname && touched.lastname && <span className={S.error}>{errors.lastname}</span>}
                       </FormControl>
 
                       <FormControl isRequired>
@@ -132,19 +134,19 @@ function Feedback() {
                           name='email'
                           type='email'
                         />
-                        {errors.email && touched.email && <div>{errors.email}</div>}
+                        {errors.email && touched.email && <span className={S.error}>{errors.email}</span>}
                       </FormControl>
 
 
                       <FormControl>
                         <FormLabel htmlFor='issue'>Anliegen</FormLabel>
                         <Field as={Select} id='issue' name='issue'>
-                          <option disabled selected>Was ist dein Anliegen?</option>
+                          {/* <option disabled selected>Was ist dein Anliegen?</option> */}
                           <option>Es fehlen Verkerhrslinien bei mir</option>
                           <option>Die ÖPNV Daten stimmen nicht</option>
                           <option>Keine Ahnung tbh</option>
                         </Field>
-                        {errors.issue && touched.issue && <FormHelperText>{errors.issue}</FormHelperText>}
+                        {errors.issue && <span className={S.error}>{errors.issue}</span>}
                       </FormControl>
 
                       <FormControl>
@@ -154,15 +156,13 @@ function Feedback() {
                           placeholder='Schreibe uns dein Feedback'
                           size='md'
                         />
-                        {errors.text && touched.text && <FormHelperText>{errors.text}</FormHelperText>}
-
+                        {errors.text && touched.text && <span className={S.error}>{errors.text}</span>}
                       </FormControl>
 
                       <Button
                         w={['full', 'auto']}
-                        alignSelf='right'
-                        bgColor={sec}
-                        color={prime}
+                        bgColor={btn}
+                        color="light"
                         boxShadow="lg"
                         size='md'
                         type="submit"

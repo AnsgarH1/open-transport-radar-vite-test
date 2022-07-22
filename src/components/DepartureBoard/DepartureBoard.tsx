@@ -14,6 +14,7 @@ function DepartureBoard() {
                         nearbyStations.length > 0 ?
                             nearbyStations.map((station, index) => <DepartureStation key={station.id} index={index} station={station} />)
                             :
+
                             <Text pt="4rem" align={"center"} color={useColorModeValue("primary", "secondary")}>{errorDisplayText}</Text>
                 }
             </Box>
