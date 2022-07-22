@@ -19,9 +19,6 @@ export const theme = extendTheme({
         light:"#F7FAFC",
 
         brand: {
-          // dark: "#0D1F36",
-          // med: "#2C5282", //default
-          // light: "#2B6CB0",
           prim: "#789E9E",
           sec: "#FE615A",
           tert: "#EEF3D8",

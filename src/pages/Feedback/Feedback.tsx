@@ -37,13 +37,13 @@ function Feedback() {
 
   return (
     <Layout>
-      <Flex bg={standard} align="center" justify="center" h="100vh">
+      <Flex bg={standard} align="center" justify="center" h="full">
 
 
         <CSSTransition
           in={showMessage}
           timeout={600}
-          classNames={`${S.thankyouMessage}`}
+          classNames={"thankyou-message"}
           unmountOnExit
         >
           <Heading as='h2' data-testid='response-message' size={["md", "xl", "2xl"]}>Vielen Dank für dein Feedback!</Heading>
@@ -52,20 +52,20 @@ function Feedback() {
         <CSSTransition
           in={showForm}
           timeout={600}
-          classNames={`${S.contactForm}`}
+          classNames={"contact-form"}
           appear
           unmountOnExit
           onExited={() => setShowMessage(true)}
         >
           <Box
-            w={["full", 'md']}
+            className="formBox"
+            w={["full", 'lg']}
+            h={["full", "lg", "xl", "2xl"]}
             bg={formCol}
-            p={[9, 10]}
-            mt={[20, '10vh']}
+            p={[6, 10]}
             mx='3'
             boxShadow="xl"
             rounded="lg"
-          // overflowY="scroll"
           >
             <Heading as='h2' size={["lg", "xl"]}>Kontaktformular</Heading><br />
             <Formik
@@ -77,7 +77,7 @@ function Feedback() {
               {({ errors, touched }) => (
 
                 <Form data-testid="feedback-form">
-                  <VStack spacing={4} align={['flex-start', 'center']} w='full'>
+                  <VStack spacing={[2,4]} align={['flex-start', 'center']} w='full'>
 
                     <FormControl isRequired>
                       <FormLabel htmlFor='firstname'>Vorname</FormLabel>
@@ -116,12 +116,10 @@ function Feedback() {
                     <FormControl>
                       <FormLabel htmlFor='issue'>Anliegen</FormLabel>
                       <Field as={Select} id='issue' name='issue'>
-                        {/* <option disabled selected>Was ist dein Anliegen?</option> */}
                         <option value="opt-1">Es fehlen Verkerhrslinien bei mir</option>
                         <option value="opt-2">Die ÖPNV Daten stimmen nicht</option>
                         <option value="opt-3">Keine Ahnung tbh</option>
                       </Field>
-                      {errors.issue && <span className={S.error}>{errors.issue}</span>}
                     </FormControl>
 
                     <FormControl>
@@ -132,16 +130,6 @@ function Feedback() {
                         size='md'
                       />
                       {errors.text && touched.text && <span className={S.error}>{errors.text}</span>}
-
-
-                      <Button
-                        w={['full', 'auto']}
-                        bgColor={btn}
-                        color="light"
-                        boxShadow="lg"
-                        size='md'
-                      />
-                      {errors.text && touched.text && <FormHelperText>{errors.text}</FormHelperText>}
 
                     </FormControl>
 

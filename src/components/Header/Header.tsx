@@ -8,8 +8,10 @@ function Header() {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { colorMode, toggleColorMode } = useColorMode();
 
-    const prime = useColorModeValue("primary", "secondary")
-    const sec = useColorModeValue("secondary", "primary")
+    const prime = useColorModeValue("light", "dark")
+    const sec = useColorModeValue("dark", "prlightimary")
+    const avatarCol = useColorModeValue("brand.prim", "brand.dark")
+
 
     return (
         <Box >
@@ -46,7 +48,7 @@ function Header() {
                     </Box>
                     <Menu>
                         <MenuButton data-testid={"avatar-btn"}>
-                            <Avatar />
+                            <Avatar bg={avatarCol}/>
                         </MenuButton>
                         <MenuList>
 

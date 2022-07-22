@@ -1,4 +1,4 @@
-import { Box, Button, Grid, GridItem, Input, useColorModeValue, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, Grid, GridItem, Heading, Input, useColorModeValue, useDisclosure } from '@chakra-ui/react'
 
 import { Layout } from '../../components'
 import Map from '../../components/Map/Map'
@@ -15,9 +15,9 @@ function Home() {
     const prime = useColorModeValue("primary", "secondary")
     const btn = useColorModeValue("brand.sec", "brand.sec")
     const brand = useColorModeValue("brand.prim", "brand.dark") //Departure Board Background
-    const searchbarCol = useColorModeValue("brand.tert", "gray.900") //Departure Board Background
+    const searchbarCol = useColorModeValue("brand.dark", "brand.prim") //Departure Board Background
     const mapCol = useColorModeValue("light", "dark")
-
+    
     const { onToggle, isOpen } = useDisclosure()
     return (
         <LocationContextProvider>
@@ -33,8 +33,10 @@ function Home() {
                     data-testid={"main-grid"}
 
                 >
-                    <GridItem data-testid={"search-item"} className={`${S.round} ${S.overflow}`} bg={searchbarCol} mt="2" colSpan={{ "base": 1, "md": 3 }} w="1fr" >
+                    <GridItem className={`${S.round} ${S.overflow}`} display="flex" justify-content="center"  align-items="center" bg={searchbarCol} mt="2" colSpan={{ "base": 1, "md": 3 }} w="1fr" >    
+                        <Heading display={{ base: "none", md: "block"  }} size="xs" m="2" color="light">Suchleiste</Heading>
                     </GridItem>
+
                     <GridItem data-testid={"departure-item"} className={`${S.round} ${S.overflow}`} h="auto" w="100%" bg={brand} overflowY="scroll" colSpan={{ "base": 1, "md": 1 }}>
                         <DepartureBoard />
                     </GridItem>
@@ -42,7 +44,8 @@ function Home() {
 
 
                         {isOpen ?
-                            <Map /> : <Button data-testid={"map-button"} w="full" bg={btn} color="light" onClick={onToggle} >Öffne Karte</Button>}
+                            <Map /> : <div className={S.marg}><Button w={["full", "full", "auto"]} bg={btn} color="light" onClick={onToggle}>Öffne Karte</Button></div>
+                        }
 
                     </GridItem>
 

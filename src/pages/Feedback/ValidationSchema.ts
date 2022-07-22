@@ -13,8 +13,7 @@ export const ValidationSchema = Yup.object().shape({
       .email('Ungültige email')
       .required('E-Mail wird benötigt'),
     issue: Yup.string()
-      .ensure()
-      .required("Bitte gebe einen Grund an"),
+      .ensure(),
     text: Yup.string()
       .min(2, 'Bitte mindestens 2 Zeichen verwenden.')
       .max(500, 'Bitte maximal 500 Zeichen verwenden.')

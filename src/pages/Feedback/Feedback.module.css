@@ -3,7 +3,3 @@
     font-size: var(--chakra-fontSizes-sm);
     padding-top: var(--spacing-2);
 }
-
-.stack {
-    margin: var(--spacing-4)
-}

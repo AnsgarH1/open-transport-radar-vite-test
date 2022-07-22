@@ -22,7 +22,6 @@ interface MapboxMapProps {
  * @returns 
  */
 const useMap = () => {
-    console.log("useMap rendered")
     const [map, setMap] = useState<mapboxgl.Map>();
     const [isLoadingMap, setLoadingMap] = useState(false)
     const { currentLocation, locationError, browserSupported, isLoadingLocation } = useContext(LocationContext)
@@ -80,7 +79,6 @@ const useMap = () => {
         setLoadingMap(true)
 
         if (isLoadingLocation) {
-            console.log("returned bc location is loading")
             return
         }; //waiting on location to be loaded
 

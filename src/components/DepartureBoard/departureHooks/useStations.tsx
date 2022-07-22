@@ -14,7 +14,7 @@ const useStations = () => {
     const [isLoadingStations, setLoadingStations] = useState(false)
     const [nearbyStations, setNearbyStations] = useState<Hafas_Stations.Station[]>([])
     const { currentLocation } = useLocationContext()
-    const [errorDisplayText, setErrorDisplayText] = useState("⏲warte auf Standort..")
+    const [errorDisplayText, setErrorDisplayText] = useState("⏲ warte auf Standort..")
 
 
     function loadStations(lat: number, long: number) {
@@ -32,7 +32,7 @@ const useStations = () => {
                 }
             }).catch(error => {
                 toast({ status: "error", title: "Haltestellen konnten nicht geladen werden!", duration: 2000 })
-                setErrorDisplayText("❌Es ist Fehler aufgetreten")
+                setErrorDisplayText("❌ Es ist Fehler aufgetreten")
             }).finally(() => setLoadingStations(false))
     }
 
