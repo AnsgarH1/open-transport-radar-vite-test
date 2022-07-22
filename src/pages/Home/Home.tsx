@@ -20,7 +20,7 @@ function Home() {
     const { onToggle, isOpen } = useDisclosure()
     return (
         <LocationContextProvider>
-            <Layout>
+            <Layout >
 
                 <Grid
                     h="100%"
@@ -29,19 +29,20 @@ function Home() {
                     gap={{ "base": "1rem", "md": "0.5rem" }}
                     templateColumns={{ "base": "1fr", "md": "repeat(3,1fr)" }}
                     templateRows={{ "base": "30px 2fr 1fr", "md": "4rem 1fr" }}
+                    data-testid={"main-grid"}
 
                 >
-                    <GridItem bg="white" mt="2" rounded="lg" boxShadow='lg' colSpan={{ "base": 1, "md": 3 }} w="1fr" >
+                    <GridItem data-testid={"search-item"} bg="white" mt="2" rounded="lg" boxShadow='lg' colSpan={{ "base": 1, "md": 3 }} w="1fr" >
                         Suchleiste
                     </GridItem>
-                    <GridItem className="overflow" h="auto" w="100%" bg={sec} rounded="lg" boxShadow='lg' overflowY="scroll" colSpan={{ "base": 1, "md": 1 }}>
+                    <GridItem data-testid={"departure-item"} className="overflow" h="auto" w="100%" bg={sec} rounded="lg" boxShadow='lg' overflowY="scroll" colSpan={{ "base": 1, "md": 1 }}>
                         <DepartureBoard />
                     </GridItem>
-                    <GridItem rounded="lg" boxShadow='lg' colSpan={{ "base": 1, "md": 2 }} >
+                    <GridItem data-testid={"map-item"} rounded="lg" boxShadow='lg' colSpan={{ "base": 1, "md": 2 }} >
 
 
                         {isOpen ?
-                            <Map /> : <Button w="full" color={sec} onClick={onToggle} >öffne Karte</Button>}
+                            <Map data-testid={"map"}/> : <Button w="full" color={sec} onClick={onToggle} >öffne Karte</Button>}
 
                     </GridItem>
 
