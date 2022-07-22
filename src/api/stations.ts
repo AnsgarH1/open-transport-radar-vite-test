@@ -1,4 +1,3 @@
-
 const URL =
   "https://europe-west1-transport-radar-93936.cloudfunctions.net/default";
 const getStations = async ({
@@ -20,8 +19,7 @@ const getStations = async ({
     });
     if (result.ok) {
       const data: Hafas_Stations.Station[] = await result.json();
-      if(data)
-      console.log(data)
+
       return data;
     }
   } catch (error) {

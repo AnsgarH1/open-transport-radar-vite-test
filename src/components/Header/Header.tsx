@@ -69,8 +69,6 @@ function Header() {
                     borderStyle={'solid'}
                     borderColor={'gray.200'}>
                     <Stack as="nav" spacing={4} ml={"1rem"}>
-                        <NavLink to={"/home"}>Settings</NavLink>
-                        <NavLink to={"/home"}>Link2</NavLink>
                         <NavLink to={"/feedback"}>Contact</NavLink>
                         <nav onClick={toggleColorMode}>
                             {colorMode === "light" ? "Dark" : "Light"} Mode

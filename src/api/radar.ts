@@ -22,7 +22,7 @@ const getRadar = async ({
         });
         if (result.ok) {
             const data: Hafas_Radar.Radar[] = await result.json();
-            console.log(data)
+            
             return data;
         }
     } catch (error) {
