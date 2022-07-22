@@ -6,32 +6,23 @@ import { useLocationContext } from '../../../context/LocationContext'
 const useStations = () => {
 
     const toast = useToast()
-    const stationsToastId = useRef<ToastId>()
-
-
-    const showStationsToast = () => {
-        stationsToastId.current = toast({ status: "loading", title: "Lade Haltestellen..", duration: null, isClosable: true })
-    }
-    const updateStationToast = (options: UseToastOptions) => {
-        if (stationsToastId.current) {
-            toast.update(stationsToastId.current, options)
-        }
-    }
 
 
 
-    const [isLoadingGeoLocation, setLoadingGeoLocation] = useState(false)
+
+
     const [isLoadingStations, setLoadingStations] = useState(false)
     const [nearbyStations, setNearbyStations] = useState<Hafas_Stations.Station[]>([])
     const { currentLocation } = useLocationContext()
     const [errorDisplayText, setErrorDisplayText] = useState("⏲warte auf Standort..")
+
+
     function loadStations(lat: number, long: number) {
         setErrorDisplayText("🚏 lade Haltestellen..")
-        showStationsToast()
         setLoadingStations(true)
         getStations({ lat, long })
             .then(stations => {
-                updateStationToast({ status: "success", title: "Haltestellen gefunden!", duration: 2000 })
+                toast({ status: "success", title: "neue Haltestellen gefunden!", duration: 1000 })
                 if (stations && stations?.length > 0) {
                     setErrorDisplayText("hier sollte eigentlich keine Fehlermeldung stehen👻")
                     setNearbyStations(stations)
@@ -40,10 +31,11 @@ const useStations = () => {
 
                 }
             }).catch(error => {
-                updateStationToast({ status: "error", title: "Haltestellen konnten nicht geladen werden!", duration: 2000 })
+                toast({ status: "error", title: "Haltestellen konnten nicht geladen werden!", duration: 2000 })
                 setErrorDisplayText("❌Es ist Fehler aufgetreten")
             }).finally(() => setLoadingStations(false))
     }
+
 
 
     useEffect(() => {
