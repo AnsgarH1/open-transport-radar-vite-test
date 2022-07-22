@@ -19,3 +19,6 @@ npm run build
 ```
 npx open cypress
 ```
+
+### Deployte Version
+http://public-transport-radar.hoyer-it.de/
