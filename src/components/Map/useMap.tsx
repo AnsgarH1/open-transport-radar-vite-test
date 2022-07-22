@@ -1,20 +1,10 @@
-import React, { useRef, useEffect, useState, useContext } from 'react';
+import  { useRef, useEffect, useState, useContext } from 'react';
 import mapboxgl from 'mapbox-gl';
 import "mapbox-gl/dist/mapbox-gl.css";
-import { Spinner } from '@chakra-ui/react';
 import { LocationContext } from '../../context/LocationContext';
-import { FaCaretRight } from 'react-icons/fa';
-import { GeoJSON, Geometry, GeoJsonProperties, FeatureCollection } from 'geojson';
+import {  Geometry, GeoJsonProperties, FeatureCollection } from 'geojson';
 import useRadar from './useRadar';
-import useInterval from './useInterval';
-import useTimeout from './useTimeout';
 
-
-interface MapboxMapProps {
-    onCreated?(map: mapboxgl.Map): void;
-    onLoaded?(map: mapboxgl.Map): void;
-    onRemoved?(): void;
-}
 
 /**
  * THIS FUNCTION NEEDS SOME WORK, VERY FRAGILE BEHAVIOUR
@@ -24,11 +14,11 @@ interface MapboxMapProps {
 const useMap = () => {
     const [map, setMap] = useState<mapboxgl.Map>();
     const [isLoadingMap, setLoadingMap] = useState(false)
-    const { currentLocation, locationError, browserSupported, isLoadingLocation } = useContext(LocationContext)
+    const { currentLocation, locationError,  isLoadingLocation } = useContext(LocationContext)
     const { radar, isLoadingRadar, loadRadar } = useRadar();
     // const { set, reset, clear} = useTimeout(initMap, 2000);
     const [touched, setTouched] = useState(false)
-    const [zoom, setZoom] = useState(16);
+    const [zoom] = useState(16);
     const mapContainer = useRef(null);
 
 
@@ -80,7 +70,7 @@ const useMap = () => {
 
         if (isLoadingLocation) {
             return
-        }; //waiting on location to be loaded
+        } //waiting on location to be loaded
 
         //ref is not set till after the function returns and the content is rendered
         const node = mapContainer.current;
@@ -244,9 +234,7 @@ const useMap = () => {
     }
 
 
-    const cleanup = () => {
-        if (map) map.remove()
-    }
+  
 
     return {
         isLoadingMap,

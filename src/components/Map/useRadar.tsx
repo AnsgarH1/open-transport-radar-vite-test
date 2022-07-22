@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from "react";
+import {  useState } from "react";
 import { getRadar } from "../../api/radar";
-import { LocationContext } from "../../context/LocationContext";
 
 const useRadar = () => {
 

@@ -3,7 +3,6 @@ const URL =
 const getStations = async ({
   long,
   lat,
-  distance,
 }: {
   long: number;
   lat: number;

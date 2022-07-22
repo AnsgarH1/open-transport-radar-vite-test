@@ -1,4 +1,4 @@
-import { useBoolean, useToast } from "@chakra-ui/react";
+import {  useToast } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import { getDepartures } from "../../../api/departures";
 

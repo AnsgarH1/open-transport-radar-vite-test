@@ -1,5 +1,5 @@
-import { createStandaloneToast, ToastId, useToast, UseToastOptions } from '@chakra-ui/react'
-import { useEffect, useRef, useState } from 'react'
+import { useToast } from '@chakra-ui/react'
+import { useEffect, useState } from 'react'
 import { getStations } from '../../../api/stations'
 import { useLocationContext } from '../../../context/LocationContext'
 
@@ -30,7 +30,8 @@ const useStations = () => {
                     setErrorDisplayText("Es konnten keine Haltestellen geladen werden!🕳")
 
                 }
-            }).catch(error => {
+            }).catch((e) => {
+                console.log(e)
                 toast({ status: "error", title: "Haltestellen konnten nicht geladen werden!", duration: 2000 })
                 setErrorDisplayText("❌ Es ist Fehler aufgetreten")
             }).finally(() => setLoadingStations(false))

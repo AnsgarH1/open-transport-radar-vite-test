@@ -1,12 +1,10 @@
 import { Box, Flex } from '@chakra-ui/react'
-import React from 'react'
-import { useDepartureTime } from '../DepartureBoard/departureHooks/useDepartureTime'
 import "./tripStation.css"
 import { useTripStationTimes } from './useTripViewTime'
 
 function TripStation({ tripStation, variant }: { tripStation: Hafas_Trip.Stopover, variant?: "top" | "bottom" }) {
 
-    const { arrivalDelayed, arrivalTime, departureDelayed, departureTime } = useTripStationTimes(tripStation.departure, tripStation.plannedDeparture, tripStation.arrival, tripStation.plannedArrival)
+    const { arrivalDelayed, arrivalTime,  departureTime } = useTripStationTimes(tripStation.departure, tripStation.plannedDeparture, tripStation.arrival, tripStation.plannedArrival)
     return (
         <Flex align="center" pb="15px" justifyItems={"center"}>
             <Box textAlign={"center"} w="4rem" >

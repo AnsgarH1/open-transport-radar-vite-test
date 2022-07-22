@@ -1,4 +1,4 @@
-import { ToastId, useToast, UseToastOptions } from "@chakra-ui/react"
+import { ToastId, useToast } from "@chakra-ui/react"
 import React, { ReactNode, useContext, useEffect, useRef, useState } from "react"
 
 interface LocationContextProps {

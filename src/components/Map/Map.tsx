@@ -1,12 +1,6 @@
-import React, { useRef, useEffect, useState, useContext } from 'react';
-import mapboxgl from 'mapbox-gl';
 import "mapbox-gl/dist/mapbox-gl.css";
-import { Skeleton, Spinner, Button } from '@chakra-ui/react';
-import { LocationContext } from '../../context/LocationContext';
-import { FaCaretRight } from 'react-icons/fa';
 import useMap from './useMap';
-import useRadar from './useRadar';
-import { getRadar } from '../../api/radar';
+import { Skeleton } from "@chakra-ui/react";
 
 
 function Map() {
