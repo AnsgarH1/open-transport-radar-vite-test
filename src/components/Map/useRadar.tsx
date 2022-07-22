@@ -7,21 +7,21 @@ const useRadar = () => {
   const [isLoadingRadar, setLoadingRadar] = useState(false);
   const [radar, setRadar] = useState<Hafas_Radar.Radar[]>([]);
   const [radius, setRadius] = useState(0.02) // radius? oder maybe bounding box from map?
-  const [north, setNorth] = useState(0)
-  const [west, setWest] = useState(0)
-  const [south, setSouth] = useState(0)
-  const [east, setEast] = useState(0)
+  // const [north, setNorth] = useState(0)
+  // const [west, setWest] = useState(0)
+  // const [south, setSouth] = useState(0)
+  // const [east, setEast] = useState(0)
   // //maybe better use location context than use lat and lng arguments
   //const { currentLocation, locationError, browserSupported, isLoadingLocation } = useContext(LocationContext)
 
   function loadRadar(lat:number,lng:number) {
     setLoadingRadar(true);
 
-    setNorth(lat + radius)
-    setWest(lng - radius)
-    setSouth(lat - radius)
-    setEast(lng + radius)  
-    
+   const north = lat + radius
+   const west = lng - radius
+   const south = lat - radius
+   const east = lng + radius
+
     getRadar({north, west, south, east})
       .then((radar) => {
         if (radar) {

@@ -13,6 +13,10 @@ const getRadar = async ({
     east: number;
 }) => {
     try {
+        console.log(north,
+            west,
+            south,
+            east)
         const result = await fetch(URL + "/radar", {
             method: "POST",
             headers: {
@@ -24,6 +28,8 @@ const getRadar = async ({
             const data: Hafas_Radar.Radar[] = await result.json();
             console.log(data)
             return data;
+        } else {
+            console.log(result.status, result.text)
         }
     } catch (error) {
         console.log(error);

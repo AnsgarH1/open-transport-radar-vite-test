@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useContext } from 'react';
 import mapboxgl from 'mapbox-gl';
 import "mapbox-gl/dist/mapbox-gl.css";
-import { Spinner } from '@chakra-ui/react';
+import { Spinner, useColorMode } from '@chakra-ui/react';
 import { LocationContext } from '../../context/LocationContext';
 import { FaCaretRight } from 'react-icons/fa';
 import { GeoJSON, Geometry, GeoJsonProperties, FeatureCollection } from 'geojson';
@@ -26,10 +26,13 @@ const useMap = () => {
     const [isLoadingMap, setLoadingMap] = useState(false)
     const { currentLocation, locationError, browserSupported, isLoadingLocation } = useContext(LocationContext)
     const { radar, isLoadingRadar, loadRadar } = useRadar();
+    // const { style , setStyle } = useState();
     // const { set, reset, clear} = useTimeout(initMap, 2000);
     const [touched, setTouched] = useState(false)
     const [zoom, setZoom] = useState(16);
     const mapContainer = useRef(null);
+    const { colorMode } = useColorMode();
+
 
 
     useEffect(() => {
@@ -43,17 +46,41 @@ const useMap = () => {
         setMapPosition()
     }), [isLoadingMap];
 
+    let counter = useRef(0);
     //adds vehicles on map
     useEffect(() => {
         const updateSource = setInterval(async () => {
-            loadVehicles()
             addUserOnMap();
-        }, 2000);
+            console.log(counter.current)
+            if(counter.current==0){
+                if(currentLocation){
+                    console.log(currentLocation.coords.longitude, currentLocation.coords.latitude)
+                    loadRadar(currentLocation.coords.longitude, currentLocation.coords.latitude)
+                }else {
+                    console.log("NO LOCd")   
+
+                }
+                console.log("LOADING RADAR")
+                counter.current++;
+            } else if(counter.current==10){
+                counter.current=0;
+            } else {
+            counter.current++;
+            }
+            
+
+            loadVehiclesFromFrame(counter.current);
+        }, 1000);
         return (() => {
             if (updateSource) { clearInterval(updateSource); }
         })
     }), [currentLocation?.coords.longitude, currentLocation?.coords.latitude];
 
+    // const = setMapStyle = () => {
+    //     if(map)
+    //     {colorMode === "light" ? "Dark" : "Light"}
+    //     map.setStyle('mapbox://styles/mapbox/' + layerId);
+    // }
 
     /**
      * 
@@ -123,12 +150,13 @@ const useMap = () => {
     /**
      * 
      */
-    function loadVehicles() {
-        if (radar && !isLoadingRadar && currentLocation) {
-            loadRadar(currentLocation.coords.latitude, currentLocation.coords.longitude)
-            addVehicleOnMap(radar)
-        }
+    function loadVehiclesFromFrame(i: number) {
+        radar.forEach((vehicle)=>{
+            addVehicleOnMap(vehicle.frames[i], vehicle.tripId.toString())
+        })
     }
+
+
 
     /**
      * places Vehicles on Map
@@ -136,15 +164,11 @@ const useMap = () => {
      * 
      * @returns 
      */
-    function addVehicleOnMap(radar: Hafas_Radar.Radar[]) {
+    function addVehicleOnMap(frame: Hafas_Radar.Frames, title: string) {
         if (!radar || !map) return;
-        //iterate through all found vehicles 
-        radar.forEach((e) => {
-            const ln = e.location.longitude
-            const lt = e.location.latitude
-            const title = e.tripId.toString()
-            addObjectOnMap(ln, lt, title, "red")
-        })
+                const ln = frame.destination.location.longitude
+                const lt = frame.destination.location.latitude;
+                addObjectOnMap(ln, lt, title, "red")
     }
 
     /**
@@ -242,6 +266,7 @@ const useMap = () => {
             ]
         }
     }
+
 
 
     const cleanup = () => {
