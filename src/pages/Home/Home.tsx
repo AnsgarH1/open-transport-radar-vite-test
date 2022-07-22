@@ -1,4 +1,4 @@
-import { Box, Button, Grid, GridItem, useColorModeValue, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, Grid, GridItem, Input, useColorModeValue, useDisclosure } from '@chakra-ui/react'
 
 import { Layout } from '../../components'
 import Map from '../../components/Map/Map'
@@ -6,16 +6,17 @@ import DepartureBoard from '../../components/DepartureBoard/DepartureBoard'
 
 import { LocationContextProvider } from '../../context/LocationContext'
 
-
-
-import "./Home.css";
+import S from "./Home.module.css";
 
 
 
 function Home() {
 
     const prime = useColorModeValue("primary", "secondary")
-    const sec = useColorModeValue("secondary", "primary")
+    const btn = useColorModeValue("brand.sec", "brand.sec")
+    const brand = useColorModeValue("brand.prim", "brand.dark") //Departure Board Background
+    const searchbarCol = useColorModeValue("brand.tert", "gray.900") //Departure Board Background
+    const mapCol = useColorModeValue("light", "dark")
 
     const { onToggle, isOpen } = useDisclosure()
     return (
@@ -32,20 +33,16 @@ function Home() {
                     data-testid={"main-grid"}
 
                 >
-                    <GridItem data-testid={"search-item"} bg="white" mt="2" rounded="lg" boxShadow='lg' colSpan={{ "base": 1, "md": 3 }} w="1fr" >
-                        Suchleiste
+                    <GridItem data-testid={"search-item"} className={`${S.round} ${S.overflow}`} bg={searchbarCol} mt="2" colSpan={{ "base": 1, "md": 3 }} w="1fr" >
                     </GridItem>
-                    <GridItem data-testid={"departure-item"} className="overflow" h="auto" w="100%" bg={sec} rounded="lg" boxShadow='lg' overflowY="scroll" colSpan={{ "base": 1, "md": 1 }}>
+                    <GridItem data-testid={"departure-item"} className={`${S.round} ${S.overflow}`} h="auto" w="100%" bg={brand} overflowY="scroll" colSpan={{ "base": 1, "md": 1 }}>
                         <DepartureBoard />
                     </GridItem>
-                    <GridItem data-testid={"map-item"} rounded="lg" boxShadow='lg' colSpan={{ "base": 1, "md": 2 }} >
+                    <GridItem className={`${S.round} ${S.overflow}`} bg={mapCol} colSpan={{ "base": 1, "md": 2 }} >
 
 
                         {isOpen ?
-                            <Map />
-                            : <Button data-testid={"map-button"} w="full" color={sec} onClick={onToggle} >
-                                öffne Karte
-                            </Button>}
+                            <Map /> : <Button data-testid={"map-button"} w="full" bg={btn} color="light" onClick={onToggle} >Öffne Karte</Button>}
 
                     </GridItem>
 
@@ -53,7 +50,7 @@ function Home() {
                 </Grid >
 
             </Layout >
-        </LocationContextProvider>
+        </LocationContextProvider >
     )
 }
 

@@ -29,8 +29,6 @@ const useMap = () => {
     const { radar, isLoadingRadar, loadRadar } = useRadar();
     // const { set, reset, clear} = useTimeout(initMap, 2000);
     const [touched, setTouched] = useState(false)
-    const [lng, setLng] = useState(13.404955)
-    const [lat, setLat] = useState(52.520007)
     const [zoom, setZoom] = useState(16);
     const mapContainer = useRef(null);
 
@@ -55,7 +53,7 @@ const useMap = () => {
         return (() => {
             if (updateSource) { clearInterval(updateSource); }
         })
-    }), [lng, lat];
+    }), [currentLocation?.coords.longitude, currentLocation?.coords.latitude];
 
 
     /**
@@ -69,13 +67,9 @@ const useMap = () => {
             console.log(`useMap.setMapPosition: ${locationError?.message}  ${currentLocation}`);
             return;
         }
-        //set lng and lat to current positon
-        setLng(currentLocation.coords.longitude);
-        setLat(currentLocation.coords.latitude);
-
         //if map is touch don't center anymore
         if (!touched) {
-            map.easeTo({ center: [lng, lat] })
+            map.easeTo({ center: [currentLocation.coords.longitude, currentLocation.coords.latitude] })
         }
         addUserOnMap();
     }
@@ -112,36 +106,15 @@ const useMap = () => {
             container: node,
             accessToken: 'pk.eyJ1IjoidGltb3RoeWlzYWFjIiwiYSI6ImNsNHNiOGNkajAxMnAzam16aDJ4Mnh3ZnAifQ.TjhXY87DUEZ9w_fqVXOfDw', //process.env.NEXT_PUBLIC_MAPBOX_TOKEN,
             style: "mapbox://styles/mapbox/streets-v11",
-            center: [lng, lat],
+            center: [currentLocation.coords.longitude, currentLocation.coords.latitude],
             zoom: zoom,
         });
 
-        // mapboxMap.on('move', () => {
-        //     // setTouched(true);
-        //     // setLng(mapboxMap.getCenter().lng)
-        //     // setLat(mapboxMap.getCenter().lat)
-        //     // setZoom(mapboxMap.getZoom())
-        // })
+
 
         const nav = new mapboxgl.NavigationControl()
 
-        // //geolocation control from mapbox, wanted to implement own code though
-        // const ctrl = new mapboxgl.GeolocateControl({
-        //     positionOptions: {
-        //         enableHighAccuracy: true
-        //     },
-        //     trackUserLocation: true,
-        //     showUserHeading: true
-        // })
-
-        //mapboxMap.addControl(ctrl)
         mapboxMap.addControl(nav)
-
-        // // triggers geolocation control so you don't have to activate in manually
-        // mapboxMap.on('load', () => {
-        //     // ctrl.trigger();
-        //     setLoadingMap(false)
-        // });
 
         setMap(mapboxMap);
         setLoadingMap(false)
@@ -153,8 +126,8 @@ const useMap = () => {
      * 
      */
     function loadVehicles() {
-        if (radar && !isLoadingRadar) {
-            loadRadar(lat, lng)
+        if (radar && !isLoadingRadar && currentLocation) {
+            loadRadar(currentLocation.coords.latitude, currentLocation.coords.longitude)
             addVehicleOnMap(radar)
         }
     }
@@ -181,9 +154,9 @@ const useMap = () => {
      * @returns 
      */
     function addUserOnMap() {
-        if (!map || !map.isStyleLoaded()) return;
+        if (!map || !map.isStyleLoaded() || !currentLocation) return;
         const title = "user"
-        addObjectOnMap(lng, lat, title, "blue");
+        addObjectOnMap(currentLocation.coords.longitude, currentLocation.coords.latitude, title, "blue");
     }
 
     /**

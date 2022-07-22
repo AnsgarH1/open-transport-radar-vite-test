@@ -13,14 +13,15 @@ function DepartureItem({ departure, index }: { departure: Hafas_Departures.Depar
     const { isOpen, onOpen, onClose } = useDisclosure()
     const { trip, isLoading, loadTrip } = useTrip(tripId, line.name || line.fahrtNr)
 
-    const prime = useColorModeValue("primary", "secondary")
-    const sec = useColorModeValue("secondary", "primary")
+    const standard = useColorModeValue("light", "dark")
+    const brand = useColorModeValue("brand.med", "brand.dark")
+    const sign = useColorModeValue("brand.dark", "brand.sec")
 
     if (cancelled) return (
         <Flex direction="column" borderTop={index === 0 ? "none" : "lightgrey solid 0.1px "} >
             <Box>
                 <Flex align="center">
-                    <Icon as={FcCancel} mr="1" boxSize={"7"} />
+                    <Icon as={FcCancel}  mr="1" boxSize={"7"} />
                     <Heading size={"sm"} overflow="hidden" as="s" whiteSpace="nowrap">{line.name}</Heading>
                 </Flex>
                 <Text as="s" overflow="hidden" textOverflow={"ellipsis"} whiteSpace="nowrap">{destination.name}</Text>
@@ -37,7 +38,7 @@ function DepartureItem({ departure, index }: { departure: Hafas_Departures.Depar
                         <Flex justify={"space-between"} p="0" m="0" >
 
                             <Flex align="center">
-                                {platform && <Box border="solid 1px" bgColor="blue.700" color={prime} px="1" rounded="md" mr="1" whiteSpace={"nowrap"}>{platform}</Box>}
+                                {platform && <Box border="solid 1px" bgColor={sign} color={standard} px="1" rounded="md" mr="1" whiteSpace={"nowrap"}>{platform}</Box>}
                                 <Heading size="sm">{line.name || "LineName"}</Heading>
                             </Flex>
                             <Flex align={"center"} justifyContent="end"  >

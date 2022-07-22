@@ -4,7 +4,7 @@ import useStations from './departureHooks/useStations'
 
 function DepartureBoard() {
 
-    const { nearbyStations, isLoadingStations } = useStations()
+    const { nearbyStations, isLoadingStations,errorDisplayText } = useStations()
 
     return (
         <Box>
@@ -14,7 +14,8 @@ function DepartureBoard() {
                         nearbyStations.length > 0 ?
                             nearbyStations.map((station, index) => <DepartureStation key={station.id} index={index} station={station} />)
                             :
-                            <Text pt="4rem" align={"center"} color={useColorModeValue("primary", "secondary")}>keine Haltestellen geladen 🙁</Text>
+
+                            <Text pt="4rem" align={"center"} color={useColorModeValue("primary", "secondary")}>{errorDisplayText}</Text>
                 }
             </Box>
 
