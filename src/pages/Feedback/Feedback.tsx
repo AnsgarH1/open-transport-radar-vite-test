@@ -149,8 +149,8 @@ function Feedback() {
                       data-testid='submit-btn'
                       w={['full', 'auto']}
                       alignSelf='right'
-                      bgColor={sec}
-                      color={prime}
+                      bgColor={btn}
+                      color='light'
                       boxShadow="lg"
                       size={['md', 'lg']}
                       type="submit"
