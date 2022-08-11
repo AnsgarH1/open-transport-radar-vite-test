@@ -1,7 +1,7 @@
 {
   "name": "Public-Transport-Radar",
   "short_name": "Public-Transport-Radar",
-  "start_url": "https://public-transport-radar.hoyer-it.de/",
+  "start_url": ".",
   "display": "standalone",
   "description": "Finde deine nächsten Abfahrten in wenigen Sekunden!",
   "lang": "german",
