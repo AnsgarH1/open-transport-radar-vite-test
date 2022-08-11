@@ -17,13 +17,17 @@ function DepartureItem({ departure, index }: { departure: Hafas_Departures.Depar
     const sign = useColorModeValue("brand.dark", "brand.sec")
 
     if (cancelled) return (
-        <Flex direction="column" borderTop={index === 0 ? "none" : "lightgrey solid 0.1px "} >
+        <Flex rounded="lg" borderWidth="1px" borderColor={useColorModeValue("red.200", "red.700")} m="2" p="2" direction="column" borderTop={index === 0 ? "none" : "lightgrey solid 0.1px "} >
             <Box>
-                <Flex align="center">
-                    <Icon as={FcCancel}  mr="1" boxSize={"7"} />
-                    <Heading size={"sm"} overflow="hidden" as="s" whiteSpace="nowrap">{line.name}</Heading>
+                <Flex align="center" justify="space-between">
+                    <Box>
+
+                        <Icon as={FcCancel} mr="1" boxSize={"7"} />
+                        <Heading size={"sm"} overflow="hidden" as="s" whiteSpace="nowrap">{line.name}</Heading>
+                    </Box>
+                    <Text color={useColorModeValue("red.600", "red.500")}>Fällt aus!</Text>
                 </Flex>
-                <Text as="s" overflow="hidden" textOverflow={"ellipsis"} whiteSpace="nowrap">{destination.name}</Text>
+                <Text as="s" fontSize={"xl"} >{destination.name}</Text>
             </Box>
         </Flex>
     )
