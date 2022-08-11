@@ -13,8 +13,8 @@ const useStations = () => {
 
     const [isLoadingStations, setLoadingStations] = useState(false)
     const [nearbyStations, setNearbyStations] = useState<Hafas_Stations.Station[]>([])
-    const { currentLocation } = useLocationContext()
-    const [errorDisplayText, setErrorDisplayText] = useState("⏲ warte auf Standort..")
+    const { currentLocation, locationError } = useLocationContext()
+    const [errorDisplayText, setErrorDisplayText] = useState("⏲ initialisiere..")
 
 
     function loadStations(lat: number, long: number) {
@@ -40,12 +40,19 @@ const useStations = () => {
     const [initialized, setInitialized] = useState(false)
 
     useEffect(() => {
+        console.log("currentLocation Effekt!")
         if (currentLocation && !initialized) {
             loadStations(currentLocation.coords.latitude, currentLocation.coords.longitude)
             setInitialized(true)
         }
     }, [currentLocation,])
 
+    useEffect(() => {
+        console.log("LocationError effekt!")
+        if (locationError) {
+            setErrorDisplayText("❌ Der Standort konnte nicht geladen werden! Bitte überprüfe in den Browsereinstellungen die Standortfreigabe!")
+        }
+    }, [locationError])
     return {
         nearbyStations: nearbyStations || undefined,
         loadStations,
