@@ -27,7 +27,7 @@ function DepartureItem({ departure, index }: { departure: Hafas_Departures.Depar
                     </Box>
                     <Text color={useColorModeValue("red.600", "red.500")}>Fällt aus!</Text>
                 </Flex>
-                <Text as="s" fontSize={"xl"} overflow="hidden" textOverflow={"ellipsis"} whiteSpace="nowrap">{destination.name}</Text>
+                <Text as="s" fontSize={"xl"} >{destination.name}</Text>
             </Box>
         </Flex>
     )
