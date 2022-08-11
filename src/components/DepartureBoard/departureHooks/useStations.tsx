@@ -50,7 +50,7 @@ const useStations = () => {
     useEffect(() => {
         console.log("LocationError effekt!")
         if (locationError) {
-            setErrorDisplayText("❌ Der Standort konnte nicht geladen werden! Bitte überprüfe in den Browsereinstellungen die Standortfreigabe!")
+            setErrorDisplayText(`❌ Der Standort konnte nicht geladen werden! ${locationError.message}`)
         }
     }, [locationError])
     return {
